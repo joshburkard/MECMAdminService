@@ -3,7 +3,7 @@
 A PowerShell module for managing Microsoft Endpoint Configuration Manager (MECM) / System Center Configuration Manager (SCCM) through the Administration Service REST API.
 
 ![PowerShell](https://img.shields.io/badge/PowerShell-5.1%20%7C%207.x-blue)
-![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey)
+![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)
 
 ## 📋 Table of Contents
 
@@ -23,8 +23,8 @@ A PowerShell module for managing Microsoft Endpoint Configuration Manager (MECM)
 The **SCCMAdminService** module provides a PowerShell interface to interact with the Configuration Manager Administration Service (Admin Service). It enables automation of common MECM/SCCM tasks such as managing collections, devices, scripts, and more through a modern REST API.
 
 This module is compatible with:
-- **Windows PowerShell 5.1**
-- **PowerShell 7.x** (cross-platform)
+- **Windows PowerShell 5.1** (Windows only)
+- **PowerShell 7.x** (Windows, Linux, macOS)
 
 ## What is the Admin Service?
 
@@ -85,9 +85,11 @@ Common required permissions:
 
 ### PowerShell Environment
 
-- **Windows PowerShell 5.1** or later
-- **PowerShell 7.x** (recommended for cross-platform support)
+- **Windows PowerShell 5.1** or later (Windows only)
+- **PowerShell 7.x** (recommended for cross-platform support - Windows, Linux, macOS)
 - **Execution Policy**: Set to allow script execution
+
+> **Note**: While PowerShell 7.x is supported on all platforms, the SCCM Admin Service endpoint must still be accessible over the network (typically a Windows Server).
 
 ## 📦 Installation
 
