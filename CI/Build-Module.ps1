@@ -212,7 +212,10 @@ if($FunctionalTestFiles){
 
             try {
                 # Get files changed in working directory (uncommitted changes)
-                $changedFiles = git diff --name-only HEAD 2>$null
+                # Include both modified files and new untracked files
+                $modifiedFiles = git diff --name-only HEAD 2>$null
+                $untrackedFiles = git ls-files --others --exclude-standard 2>$null
+                $changedFiles = @($modifiedFiles) + @($untrackedFiles) | Where-Object { $_ }
 
                 # Filter for function files in Code/Public or Code/Private
                 $changedFunctions = $changedFiles | Where-Object {

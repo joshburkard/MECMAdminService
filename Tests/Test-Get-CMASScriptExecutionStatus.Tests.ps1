@@ -165,13 +165,13 @@ Describe "Get-CMASScriptExecutionStatus Parameter Validation" -Tag "Unit" {
 
     Context "Parameter Metadata" {
 
-        It "Should accept long for OperationID parameter" {
+        It "Should accept string for OperationID parameter" {
             # Get the command metadata
             $command = Get-Command Get-CMASScriptExecutionStatus
             $param = $command.Parameters['OperationID']
 
             # Assert
-            $param.ParameterType.Name | Should -Match "Int|Long"
+            $param.ParameterType.Name | Should -Be "String"
         }
 
         It "Should accept string for CollectionID parameter" {
@@ -192,14 +192,17 @@ Describe "Get-CMASScriptExecutionStatus Parameter Validation" -Tag "Unit" {
             $param.ParameterType.Name | Should -Be "String"
         }
 
-        It "Should have all filter parameters as optional" {
+        It "Should have filter parameters with appropriate mandatory settings" {
             # Get the command metadata
             $command = Get-Command Get-CMASScriptExecutionStatus
 
-            # Assert
-            $command.Parameters['OperationID'].Attributes.Mandatory | Should -Not -Contain $true
-            $command.Parameters['CollectionID'].Attributes.Mandatory | Should -Not -Contain $true
-            $command.Parameters['ScriptName'].Attributes.Mandatory | Should -Not -Contain $true
+            # Assert - Parameters are mandatory in specific parameter sets but optional in others
+            # OperationID is never mandatory (only used in OperationID parameter set)
+            $command.Parameters['OperationID'].Attributes | Where-Object { $_.Mandatory -eq $true } | Should -BeNullOrEmpty
+            # CollectionID is mandatory in 'CollectionID' parameter set
+            ($command.Parameters['CollectionID'].Attributes | Where-Object { $_.Mandatory -eq $true }).Count | Should -BeGreaterThan 0
+            # ScriptName is mandatory in 'ScriptName' parameter set
+            ($command.Parameters['ScriptName'].Attributes | Where-Object { $_.Mandatory -eq $true }).Count | Should -BeGreaterThan 0
         }
     }
 }

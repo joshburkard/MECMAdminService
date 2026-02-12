@@ -33,6 +33,7 @@ $script:TestNonExistentDeviceName = "NONEXISTENT-DEVICE-999"  # A device name th
 $script:TestCollectionID = "SMS00001"  # ID of an existing collection (SMS00001 is "All Systems")
 $script:TestCollectionName = "All Systems"  # Name of an existing collection
 $script:TestNonExistentCollectionID = "XXX99999"  # A collection ID that doesn't exist
+$script:TestNonExistentCollectionName = "NonExistent Collection 999"  # A collection name that doesn't exist
 
 # Test Script Information
 $script:TestScriptGuid = "00000000-0000-0000-0000-000000000000"  # GUID of an existing script in your environment

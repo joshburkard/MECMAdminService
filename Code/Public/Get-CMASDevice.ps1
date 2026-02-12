@@ -10,14 +10,14 @@ function Get-CMASDevice {
         .PARAMETER Name
             The name of the device to retrieve information for. If not specified, all devices will be returned.
 
-        .PARAMETER DeviceID
+        .PARAMETER ResourceID
             The unique identifier of the device to retrieve information for. If not specified, all devices will be returned.
 
         .EXAMPLE
             Get-CMASDevice -Name "Device001"
 
         .EXAMPLE
-            Get-CMASDevice -DeviceID "12345"
+            Get-CMASDevice -ResourceID "12345"
 
         .NOTES
             This function is part of the SCCM Admin Service module.

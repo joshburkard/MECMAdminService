@@ -94,7 +94,7 @@ foreach($file in $CodeFile){
                 [boolean]( @( $Ast.FindAll( { $true } , $true ) ) | Where-Object { $_.TypeName.Name -eq 'cmdletbinding' } ) | Should -Be $true
             }
 
-            $DefaultParams = @( 'Verbose', 'Debug', 'ErrorAction', 'WarningAction', 'InformationAction', 'ErrorVariable', 'WarningVariable', 'InformationVariable', 'OutVariable', 'OutBuffer', 'PipelineVariable')
+            $DefaultParams = @( 'Verbose', 'Debug', 'ErrorAction', 'WarningAction', 'InformationAction', 'ErrorVariable', 'WarningVariable', 'InformationVariable', 'OutVariable', 'OutBuffer', 'PipelineVariable', 'ProgressAction')
             foreach ( $p in @( $ScriptCommand.Parameters.Keys | Where-Object { $_ -notin $DefaultParams } | Sort-Object ) ) {
 
                 It "$ScriptName the Help-text for paramater '$( $p )' should exist" {
@@ -105,10 +105,16 @@ foreach($file in $CodeFile){
                 $VariableTypeFull = "\[$( $ScriptCommand.Parameters."$p".ParameterType.FullName )\]"
                 $VariableType = $ScriptCommand.Parameters."$p".ParameterType.Name
                 $VariableType = $VariableType -replace 'INT32', 'INT'
+                $VariableType = $VariableType -replace 'Int64', 'long'
                 $VariableType = $VariableType -replace 'String\[\]', 'String'
                 $VariableType = $VariableType -replace 'SwitchParameter', 'Switch'
+
+                # Escape regex special characters in type names (e.g., [] in array types)
+                $VariableTypeEscaped = [regex]::Escape($VariableType)
+                $VariableTypeFullEscaped = [regex]::Escape($VariableTypeFull)
+
                 It "$ScriptName type '[$( $ScriptCommand.Parameters."$p".ParameterType.Name )]' should be declared for parameter '$( $p )'" {
-                    ( ( $Declaration -match $VariableType ) -or ( $Declaration -match $VariableTypeFull ) ) | Should -Be $true
+                    ( ( $Declaration -match $VariableTypeEscaped ) -or ( $Declaration -match $VariableTypeFullEscaped ) ) | Should -Be $true
                 }
             }
 

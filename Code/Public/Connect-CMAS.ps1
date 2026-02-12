@@ -1,4 +1,4 @@
-﻿function Connect-CMAS {
+function Connect-CMAS {
     <#
         .SYNOPSIS
             Connects to the SCCM Admin Service on a specified site server.

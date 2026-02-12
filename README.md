@@ -1,4 +1,4 @@
-﻿# SCCMAdminService PowerShell Module
+﻿# MECMAdminService PowerShell Module
 
 A PowerShell module for managing Microsoft Endpoint Configuration Manager (MECM) / System Center Configuration Manager (SCCM) through the Administration Service REST API.
 

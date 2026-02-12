@@ -2,6 +2,50 @@
 
 This guide explains how to set up and run functional tests for the SCCM Admin Service PowerShell module.
 
+## Quick Start
+
+### Run Tests for a Specific Function
+```powershell
+# Navigate to Tests folder
+cd Tests
+
+# Run tests for a specific function
+.\Invoke-Test.ps1 -FunctionName "Get-CMASCollection"
+
+# Run with structural tests (naming, documentation, parameters)
+.\Invoke-Test.ps1 -FunctionName "Get-CMASCollection" -IncludeStructuralTests
+
+# Run with specific output level
+.\Invoke-Test.ps1 -FunctionName "Invoke-CMASScript" -Output Normal
+
+# Run only Unit tests for a function
+.\Invoke-Test.ps1 -FunctionName "Get-CMASDevice" -Tag "Unit"
+```
+
+### Run All Functional Tests
+```powershell
+# Run all Test-*.Tests.ps1 files
+.\Invoke-Test.ps1
+
+# Run only Integration tests
+.\Invoke-Test.ps1 -Tag "Integration"
+```
+
+### Run Structural Tests for a Function
+Structural tests validate function naming, documentation, and parameter structure:
+```powershell
+# Run both structural and functional tests for a specific function
+.\Invoke-Test.ps1 -FunctionName "Get-CMASCollection" -IncludeStructuralTests
+```
+
+Structural tests check:
+- ✅ Approved PowerShell verb usage
+- ✅ Module prefix in function name
+- ✅ SYNOPSIS, DESCRIPTION, and EXAMPLES in help
+- ✅ CmdletBinding attribute
+- ✅ Parameter help documentation
+- ✅ Parameter type declarations
+
 ## Test Structure
 
 The Tests folder contains several types of tests:
@@ -172,24 +216,73 @@ Tests are automatically executed when running `.\CI\Build-Module.ps1`. See **Int
 
 ### Manual Test Execution
 
-You can also run tests independently of the build process:
+You can run tests independently of the build process using either the provided `Invoke-Test.ps1` script or Pester directly.
 
-### Run All Tests
+#### Using Invoke-Test.ps1 (Recommended)
+
+The `Invoke-Test.ps1` script provides a convenient way to run tests with automatic setup:
+
+**Run tests for a specific function:**
+```powershell
+cd Tests
+.\Invoke-Test.ps1 -FunctionName "Get-CMASCollection"
+```
+
+**Run all functional tests:**
+```powershell
+.\Invoke-Test.ps1
+```
+
+**Run with different output levels:**
+```powershell
+# Less verbose
+.\Invoke-Test.ps1 -FunctionName "Connect-CMAS" -Output Normal
+
+# More verbose
+.\Invoke-Test.ps1 -FunctionName "Invoke-CMASScript" -Output Diagnostic
+```
+
+**Filter by tags:**
+```powershell
+# Run only Integration tests for a function
+.\Invoke-Test.ps1 -FunctionName "Get-CMASDevice" -Tag "Integration"
+
+# Run only Unit tests for all functions
+.\Invoke-Test.ps1 -Tag "Unit"
+```
+
+**Get available functions:**
+```powershell
+# Run without parameters to see available test files
+.\Invoke-Test.ps1 -FunctionName "NonExistent"
+```
+
+**Include structural tests:**
+```powershell
+# Run both structural and functional tests for comprehensive validation
+.\Invoke-Test.ps1 -FunctionName "Get-CMASCollection" -IncludeStructuralTests
+
+# Useful before code reviews or releases to ensure code quality
+```
+
+#### Using Pester Directly
+
+**Run all tests:**
 ```powershell
 Invoke-Pester -Path .\Tests\
 ```
 
-### Run Structural Tests Only
+**Run structural tests only:**
 ```powershell
 Invoke-Pester -Path .\Tests\Functions.Tests.ps1
 ```
 
-### Run Functional Tests Only
+**Run functional tests only:**
 ```powershell
-Invoke-Pester -Path .\Tests\Test-FunctionalBehavior.Tests.ps1
+Invoke-Pester -Path .\Tests\ -TagFilter "Integration"
 ```
 
-### Run Tests by Tag
+**Run tests by tag:**
 ```powershell
 # Run only integration tests (require SCCM connection)
 Invoke-Pester -Path .\Tests\ -Tag "Integration"
@@ -198,12 +291,12 @@ Invoke-Pester -Path .\Tests\ -Tag "Integration"
 Invoke-Pester -Path .\Tests\ -Tag "Unit"
 ```
 
-### Run Tests with Detailed Output
+**Run tests with detailed output:**
 ```powershell
 Invoke-Pester -Path .\Tests\Test-Get-CMASDevice.Tests.ps1 -Output Detailed
 ```
 
-### Run Specific Test File
+**Run specific test file:**
 ```powershell
 # Run tests for a specific function
 Invoke-Pester -Path .\Tests\Test-Connect-CMAS.Tests.ps1
