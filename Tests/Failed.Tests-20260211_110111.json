@@ -1,0 +1,32 @@
+{
+  "Name": "Invoke-CMASApi should have a CmdletBinding",
+  "Path": [
+    "Test Code-file Invoke-CMASApi.ps1",
+    "Parameters of Invoke-CMASApi",
+    "Invoke-CMASApi should have a CmdletBinding"
+  ],
+  "ExpandedName": "Invoke-CMASApi should have a CmdletBinding",
+  "ExpandedPath": "Test Code-file Invoke-CMASApi.ps1.Parameters of Invoke-CMASApi.Invoke-CMASApi should have a CmdletBinding",
+  "Result": "Failed",
+  "ErrorRecord": [
+    "Expected $true, but got $false."
+  ],
+  "Duration": {
+    "Ticks": 736652,
+    "Days": 0,
+    "Hours": 0,
+    "Milliseconds": 73,
+    "Microseconds": 665,
+    "Nanoseconds": 200,
+    "Minutes": 0,
+    "Seconds": 0,
+    "TotalDays": 8.526064814814815E-07,
+    "TotalHours": 2.0462555555555554E-05,
+    "TotalMilliseconds": 73.6652,
+    "TotalMicroseconds": 73665.2,
+    "TotalNanoseconds": 73665200.0,
+    "TotalMinutes": 0.0012277533333333334,
+    "TotalSeconds": 0.0736652
+  },
+  "ItemType": "Test"
+}

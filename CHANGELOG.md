@@ -1,0 +1,8 @@
+Version | Description | Date | Author
+--- | --- | --- | ---
+0.0.1 | Initial Module | 2026-02-11 | Josua Burkard
+0.0.4 | Invoke-CMASScript | 2026-02-11 | Josua Burkard
+0.0.5 |  | 2026-02-11 | Josua Burkard
+0.0.6 | added functional tests and documentation | 2026-02-11 | Josua Burkard
+0.0.7 | Added GetCMASCollectionDirectMembershipRule | 2026-02-11 | Josua Burkard
+0.0.8 | add Get-CMASCollectionDirectMembershipRule | 2026-02-11 | Josua Burkard
