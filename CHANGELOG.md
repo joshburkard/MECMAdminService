@@ -12,3 +12,4 @@ Version | Description | Date | Author
 0.0.12 | added Add-CMASCollectionMembershipRule | 2026-02-13 | Josua Burkard
 0.0.13 | added Remove-CMASCollectionMembershipRule | 2026-02-13 | Josua Burkard
 0.1.0 | added New-CMASCollection | 2026-02-13 | Josua Burkard
+0.2.0 | added Remove-CMASCollection | 2026-02-13 | Josua Burkard
