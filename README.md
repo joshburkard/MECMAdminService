@@ -296,25 +296,33 @@ Please read our **[Contribution Guide (CONTRIBUTING.md)](./CONTRIBUTING.md)**.
 ### Quick Start for Contributors
 
 ```powershell
-# 1. Clone the repository
-git clone https://github.com/yourusername/SCCMAdminService.git
+# 1. Fork the repository on GitHub (click "Fork" button)
 
-# 2. Create your feature branch
+# 2. Clone YOUR fork
+git clone https://github.com/YOUR-USERNAME/SCCMAdminService.git
+cd SCCMAdminService
+
+# 3. Create a feature branch (REQUIRED - no direct commits to main!)
 git checkout -b feature/your-feature-name
 
-# 3. Make your changes following the function template
+# 4. Make your changes following the function template
 # See Code/function-template.ps1
 
-# 4. Test your changes
+# 5. Test your changes
 .\Tests\Invoke-Test.ps1 -FunctionName "Your-Function"
 
-# 5. Build the module
+# 6. Build the module (optional)
 .\CI\Build-Module.ps1
 
-# 6. Commit and push
+# 7. Commit and push to your feature branch
+git add .
 git commit -m "Add your feature"
 git push origin feature/your-feature-name
+
+# 8. Create a Pull Request on GitHub from your feature branch
 ```
+
+> **⚠️ Important**: Direct pushes to the `main` branch are blocked. All changes must go through pull requests, even for core contributors. This ensures code quality and proper review.
 
 ## 📄 License
 

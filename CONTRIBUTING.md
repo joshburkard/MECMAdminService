@@ -4,16 +4,107 @@ Thank you for your interest in contributing to the MECMAdminService PowerShell m
 
 ## 📋 Table of Contents
 
+- [Getting Started](#getting-started)
+- [Branching Strategy](#branching-strategy)
 - [Project Structure](#project-structure)
 - [Development Workflow](#development-workflow)
 - [Creating or Modifying Functions](#creating-or-modifying-functions)
 - [Testing](#testing)
 - [Building the Module](#building-the-module)
 - [Documentation](#documentation)
-- [Version Control](#version-control)
+- [Pull Request Process](#pull-request-process)
+- [Branch Protection](#branch-protection)
 - [Best Practices](#best-practices)
 
-## 📁 Project Structure
+## � Getting Started
+
+### For External Contributors (Recommended)
+
+If you don't have write access to the repository:
+
+```powershell
+# 1. Fork the repository on GitHub (click "Fork" button)
+
+# 2. Clone YOUR fork
+git clone https://github.com/YOUR-USERNAME/MECMAdminService.git
+cd MECMAdminService
+
+# 3. Add upstream remote to stay in sync
+git remote add upstream https://github.com/joshburkard/MECMAdminService.git
+
+# 4. Create a feature branch (IMPORTANT!)
+git checkout -b feature/your-feature-name
+```
+
+### For Core Contributors (With Write Access)
+
+If you have write access to the repository:
+
+```powershell
+# 1. Clone the main repository
+git clone https://github.com/joshburkard/MECMAdminService.git
+cd MECMAdminService
+
+# 2. ALWAYS create a feature branch (NEVER work directly on main/master!)
+git checkout -b feature/your-feature-name
+```
+
+> **⚠️ IMPORTANT**: Never commit directly to `main` or `master` branch! Always use feature branches and pull requests.
+
+## 🌳 Branching Strategy
+
+This project follows a **feature branch workflow** with branch protection on the main branch.
+
+### Branch Naming Conventions
+
+Use descriptive names with prefixes:
+
+- **feature/** - New features or functions
+  - `feature/add-get-cmas-user`
+  - `feature/collection-export`
+
+- **fix/** - Bug fixes
+  - `fix/connection-timeout`
+  - `fix/error-handling-device-query`
+
+- **docs/** - Documentation updates
+  - `docs/update-readme`
+  - `docs/add-examples`
+
+- **refactor/** - Code refactoring (no behavior change)
+  - `refactor/simplify-api-calls`
+  - `refactor/improve-error-messages`
+
+- **test/** - Adding or updating tests
+  - `test/add-collection-tests`
+  - `test/improve-coverage`
+
+### Main Branch Protection
+
+The `main` (or `master`) branch is protected with the following rules:
+
+- ✅ **Pull requests required** - Direct pushes are blocked
+- ✅ **Code review required** - At least one approval needed
+- ✅ **Status checks must pass** - Structural tests must succeed
+- ✅ **Branch must be up to date** - Rebase or merge before PR approval
+- ✅ **Linear history** - Prefer rebase to keep history clean
+
+### Workflow Summary
+
+```mermaid
+graph LR
+    A[main branch] -->|1. Create branch| B[feature/your-feature]
+    B -->|2. Make changes| B
+    B -->|3. Commit & push| B
+    B -->|4. Create PR| C[Pull Request]
+    C -->|5. Code review| C
+    C -->|6. Tests pass| C
+    C -->|7. Merge| A
+```
+
+**Key principle**: All changes must go through pull requests, even for core contributors!
+
+## �📁 Project Structure
 
 The project follows a well-organized structure to separate source code, tests, builds, and documentation:
 
@@ -71,19 +162,28 @@ SCCMAdminService/
 
 ## 🔄 Development Workflow
 
-### 1. Set Up Your Environment
+> **Prerequisites**: You should have already forked/cloned the repository and created a feature branch (see [Getting Started](#getting-started)).
+
+### 1. Ensure You're on Your Feature Branch
 
 ```powershell
-# Clone the repository
-git clone https://github.com/joshburkard/MECMAdminService.git
-cd MECMAdminService
+# Verify you're NOT on main/master
+git branch --show-current
+# Should show: feature/your-feature-name
 
-# Import the development version
+# If you're on main, create and switch to a feature branch
+git checkout -b feature/your-feature-name
+```
+
+### 2. Import Development Environment
+
+```powershell
+# Import the development version for testing
 Import-Module .\Code\Public\*.ps1 -Force
 Import-Module .\Code\Private\*.ps1 -Force
 ```
 
-### 2. Configure Test Environment (Optional)
+### 3. Configure Test Environment (Optional)
 
 If you want to run functional tests against an actual SCCM environment:
 
@@ -97,21 +197,25 @@ code .\Tests\declarations.ps1
 
 > **Note**: The `declarations.ps1` file is git-ignored to prevent committing sensitive environment details.
 
-### 3. Make Your Changes
+### 4. Make Your Changes
 
 - Create or modify functions in `Code/Public/` or `Code/Private/`
 - Follow the function template in `Code/function-template.ps1`
 - Use approved PowerShell verbs (Get, Set, New, Remove, etc.)
 - Follow naming convention: `Verb-CMASNoun` (CMAS is the module prefix)
+- Commit frequently with clear messages
 
-### 4. Test Your Changes
+### 5. Test Your Changes
 
 ```powershell
-# Run tests for your function
+# Run structural tests (must pass before creating PR)
+Invoke-Pester -Script .\Tests\Functions.Tests.ps1
+
+# Run tests for your specific function
 .\Tests\Invoke-Test.ps1 -FunctionName "Get-CMASDevice" -IncludeStructuralTests
 ```
 
-### 5. Build the Module
+### 6. Build the Module
 
 ```powershell
 # Run the build process
@@ -128,7 +232,26 @@ The build script will:
 - Run functional tests (smart mode - only changed functions)
 - Update CHANGELOG.md
 
-### 6. Generate Documentation
+> **Note**: Building is optional before creating a PR. The CI/CD pipeline will build and test your changes.
+
+### 7. Commit and Push Your Changes
+
+```powershell
+# Stage your changes
+git add .
+
+# Commit with a descriptive message
+git commit -m "Add Get-CMASNewFeature function"
+
+# Push to your feature branch
+git push origin feature/your-feature-name
+```
+
+### 8. Create a Pull Request
+
+See the [Pull Request Process](#pull-request-process) section below for detailed steps.
+
+### 9. Generate Documentation (Optional)
 
 Documentation is generated automatically during the build, but you can also run it manually:
 
@@ -466,36 +589,218 @@ When adding new functions, update the "Available Functions" section in README.md
 - `Get-CMASCategory` - Description of function
 ```
 
-## 🔀 Version Control
+## 🔀 Pull Request Process
 
-### Git Workflow
+### Creating a Pull Request
 
-1. **Create a branch** for your feature/fix:
-   ```bash
-   git checkout -b feature/add-new-function
+1. **Push your feature branch** to GitHub:
+   ```powershell
+   git push origin feature/your-feature-name
    ```
 
-2. **Make your changes** and commit:
-   ```bash
-   git add .
-   git commit -m "Add Get-CMASNewFeature function"
+2. **Open a Pull Request** on GitHub:
+   - Navigate to the repository on GitHub
+   - Click "Pull requests" → "New pull request"
+   - Select your feature branch as the source
+   - Select `main` as the target
+   - Fill in the PR template (see below)
+
+3. **Wait for automated checks**:
+   - Structural tests must pass
+   - Code will be automatically reviewed
+   - Any failures will be reported in the PR
+
+4. **Request review** from maintainers
+
+5. **Address feedback**:
+   - Make requested changes in your feature branch
+   - Commit and push - the PR will update automatically
+   - Respond to comments and questions
+
+6. **Merge** (done by maintainers after approval)
+
+### Pull Request Template
+
+Use this template when creating your PR:
+
+```markdown
+## Description
+Brief description of what this PR does.
+
+## Type of Change
+- [ ] New feature (new function or capability)
+- [ ] Bug fix (fixes an issue)
+- [ ] Documentation update
+- [ ] Code refactoring (no behavior change)
+- [ ] Test improvements
+
+## Changes Made
+- Added `Get-CMASNewFeature` function
+- Updated README.md with new function
+- Added test file `Test-Get-CMASNewFeature.Tests.ps1`
+
+## Testing
+- [ ] Structural tests pass
+- [ ] Function-specific tests created and pass
+- [ ] Tested against SCCM environment (if applicable)
+
+## Checklist
+- [ ] Function follows naming convention (Verb-CMASNoun)
+- [ ] Comment-based help is complete (SYNOPSIS, DESCRIPTION, EXAMPLES)
+- [ ] Parameters are documented
+- [ ] Error handling implemented
+- [ ] Test file created (Test-FunctionName.Tests.ps1)
+- [ ] Documentation generated/updated
+- [ ] CHANGELOG.md updated (or will be updated during build)
+
+## Related Issues
+Closes #123 (if applicable)
+```
+
+### Code Review Process
+
+Your PR will be reviewed for:
+
+- ✅ **Code quality** - Follows PowerShell best practices
+- ✅ **Function structure** - Proper naming, parameters, help
+- ✅ **Testing** - Adequate test coverage
+- ✅ **Documentation** - Clear and complete
+- ✅ **Error handling** - Proper try/catch blocks
+- ✅ **No breaking changes** - Unless discussed and approved
+
+### After PR Approval
+
+Once your PR is approved and merged:
+
+1. **Delete your feature branch** (GitHub will prompt)
+2. **Update your local repository**:
+   ```powershell
+   git checkout main
+   git pull upstream main  # or origin main
+   git branch -d feature/your-feature-name
    ```
+3. **Start a new feature branch** for your next contribution
 
-3. **Push your branch**:
-   ```bash
-   git push origin feature/add-new-function
-   ```
+## 🔒 Branch Protection
 
-4. **Create a Pull Request** on GitHub
+### Repository Settings (For Maintainers)
 
-### Commit Message Guidelines
+To protect the `main` branch from direct pushes, configure these settings on GitHub:
+
+#### Branch Protection Rules
+
+1. Navigate to **Settings** → **Branches** → **Add rule**
+2. Branch name pattern: `main` (or `master`)
+3. Enable the following:
+
+**Protect matching branches:**
+- ✅ Require a pull request before merging
+  - ✅ Require approvals: 1 (or more)
+  - ✅ Dismiss stale pull request approvals when new commits are pushed
+  - ✅ Require review from Code Owners (optional)
+
+- ✅ Require status checks to pass before merging
+  - ✅ Require branches to be up to date before merging
+  - Add status checks: (CI/CD pipeline checks)
+
+- ✅ Require conversation resolution before merging
+- ✅ Require signed commits (optional, but recommended)
+- ✅ Require linear history (prevents merge commits)
+- ✅ Include administrators (enforce rules for everyone)
+
+**Rules applied to everyone:**
+- ✅ Restrict who can push to matching branches
+  - Only allow specific people or teams
+  - Or: Allow no one (all changes via PR only)
+
+### Local Branch Protection (For All Contributors)
+
+Add a git hook to prevent accidental commits to main:
+
+```powershell
+# Create pre-commit hook
+$hookPath = ".git\hooks\pre-commit"
+$hookContent = @'
+#!/bin/sh
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+if [ "$branch" = "main" ] || [ "$branch" = "master" ]; then
+  echo "❌ ERROR: Direct commits to $branch are not allowed!"
+  echo "Please create a feature branch:"
+  echo "  git checkout -b feature/your-feature-name"
+  exit 1
+fi
+'@
+
+Set-Content -Path $hookPath -Value $hookContent -Encoding UTF8
+
+# On Unix/Mac, also make executable
+# chmod +x .git/hooks/pre-commit
+```
+
+This prevents you from accidentally committing to main locally.
+
+### Why Branch Protection?
+
+1. **Quality Control** - All code is reviewed before merging
+2. **Prevents Accidents** - Can't accidentally push breaking changes
+3. **Audit Trail** - Clear history of who approved what
+4. **Testing** - Automated tests run before merge
+5. **Documentation** - PRs serve as documentation of changes
+6. **Collaboration** - Encourages discussion and knowledge sharing
+
+## 📝 Commit Message Guidelines
 
 Use clear, descriptive commit messages:
 
+**Good examples:**
 - `Add Get-CMASNewFeature function`
 - `Fix error handling in Get-CMASDevice`
 - `Update documentation for Connect-CMAS`
 - `Refactor Invoke-CMASApi for better error messages`
+- `Test: Add integration tests for Get-CMASCollection`
+- `Docs: Update README with new examples`
+
+**Commit message format:**
+```
+Type: Brief description (50 chars or less)
+
+Optional detailed explanation of what changed and why.
+Wrap at 72 characters.
+
+Fixes #123
+```
+
+**Types:**
+- `Add:` New features or functions
+- `Fix:` Bug fixes
+- `Update:` Updates to existing functionality
+- `Refactor:` Code refactoring
+- `Test:` Adding or updating tests
+- `Docs:` Documentation changes
+- `Build:` Build system or CI/CD changes
+
+### Syncing Your Fork (External Contributors)
+
+Keep your fork up to date with the main repository:
+
+```powershell
+# Fetch changes from upstream
+git fetch upstream
+
+# Switch to your main branch
+git checkout main
+
+# Merge upstream changes
+git merge upstream/main
+
+# Push to your fork
+git push origin main
+
+# Update your feature branch (if needed)
+git checkout feature/your-feature-name
+git rebase main
+```
 
 ### Files to Ignore
 
