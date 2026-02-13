@@ -1,9 +1,9 @@
 {
   "ModuleName": "MECMAdminService",
-  "ModuleVersion": "0.0.10",
+  "ModuleVersion": "0.0.11",
   "ModuleDescription": "manageging MECM / SCCM through Admin Service",
   "ModuleAuthor": "Josua Burkard",
   "ModuleCompany": "Josua Burkard",
   "ModulePrefix": "CMAS",
-  "LastChange": "added Get-CMASCollectionIncludeMemberShipRule"
+  "LastChange": "added Get-CMASCollectionQueryMembershipRule"
 }
