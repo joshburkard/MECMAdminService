@@ -10,3 +10,4 @@ Version | Description | Date | Author
 0.0.10 | added Get-CMASCollectionIncludeMemberShipRule | 2026-02-13 | Josua Burkard
 0.0.11 | added Get-CMASCollectionQueryMembershipRule | 2026-02-13 | Josua Burkard
 0.0.12 | added Add-CMASCollectionMembershipRule | 2026-02-13 | Josua Burkard
+0.0.13 | added Remove-CMASCollectionMembershipRule | 2026-02-13 | Josua Burkard

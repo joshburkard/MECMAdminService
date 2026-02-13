@@ -212,13 +212,18 @@ Get-Help Invoke-CMASScript -Detailed
 ### Collection Management
 - `Get-CMASCollection` - Retrieve Configuration Manager collections
 - `Get-CMASCollectionDirectMembershipRule` - Get direct membership rules from collections
+- `Get-CMASCollectionExcludeMembershipRule` - Get exclude membership rules from collections
+- `Get-CMASCollectionIncludeMembershipRule` - Get include membership rules from collections
+- `Get-CMASCollectionQueryMembershipRule` - Get query-based membership rules from collections
+- `Add-CMASCollectionMembershipRule` - Add membership rules to collections
+- `Remove-CMASCollectionMembershipRule` - Remove membership rules from collections
 
 ### Script Management
 - `Get-CMASScript` - Retrieve Configuration Manager scripts
 - `Invoke-CMASScript` - Execute a Configuration Manager script on target devices
 - `Get-CMASScriptExecutionStatus` - Check the execution status of scripts
 
-### Core Functions
+### Core (private) Functions
 - `Invoke-CMASApi` - Low-level function to make direct API calls (advanced users)
 
 ## � Documentation
@@ -268,7 +273,48 @@ For more troubleshooting help, see the [Help folder](./Help/) documentation.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests.
+Contributions are welcome! We appreciate your help in making this module better.
+
+### How to Contribute
+
+- **Report Bugs**: Open an issue describing the problem and steps to reproduce
+- **Request Features**: Suggest new functions or enhancements via issues
+- **Submit Pull Requests**: Fix bugs or add features (see contribution guide)
+- **Improve Documentation**: Help make documentation clearer and more comprehensive
+
+### Contribution Guide
+
+For detailed information on contributing to this project, including:
+- Project structure and organization
+- How to create or modify functions
+- Testing requirements and procedures
+- Build process and workflow
+- Documentation standards
+
+Please read our **[Contribution Guide (CONTRIBUTING.md)](./CONTRIBUTING.md)**.
+
+### Quick Start for Contributors
+
+```powershell
+# 1. Clone the repository
+git clone https://github.com/yourusername/SCCMAdminService.git
+
+# 2. Create your feature branch
+git checkout -b feature/your-feature-name
+
+# 3. Make your changes following the function template
+# See Code/function-template.ps1
+
+# 4. Test your changes
+.\Tests\Invoke-Test.ps1 -FunctionName "Your-Function"
+
+# 5. Build the module
+.\CI\Build-Module.ps1
+
+# 6. Commit and push
+git commit -m "Add your feature"
+git push origin feature/your-feature-name
+```
 
 ## 📄 License
 
