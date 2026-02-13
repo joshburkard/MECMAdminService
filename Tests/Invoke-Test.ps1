@@ -245,7 +245,7 @@ if($IncludeStructuralTests -and $FunctionName) {
                     Context "Parameter Documentation" {
                         $DefaultParams = @( 'Verbose', 'Debug', 'ErrorAction', 'WarningAction', 'InformationAction',
                                            'ErrorVariable', 'WarningVariable', 'InformationVariable', 'OutVariable',
-                                           'OutBuffer', 'PipelineVariable', 'ProgressAction')
+                                           'OutBuffer', 'PipelineVariable', 'ProgressAction', 'WhatIf', 'Confirm')
 
                         $parameterKeys = @( $ScriptCommand.Parameters.Keys | Where-Object { $_ -notin $DefaultParams } | Sort-Object )
 

@@ -71,15 +71,15 @@ foreach($file in $CodeFile){
         Context "Synopsis of $($file.BaseName)" {
 
             It "$ScriptName should have a SYNOPSIS" -TestCases @{ Ast = $Ast } {
-                ( $Ast -match 'SYNOPSIS' ) | Should -BeTrue
+                ( $Ast.Extent.Text -match 'SYNOPSIS' ) | Should -BeTrue
             }
 
             It "$ScriptName should have a DESCRIPTION" -TestCases @{ Ast = $Ast } {
-                ( $Ast -match 'DESCRIPTION' ) | Should -BeTrue
+                ( $Ast.Extent.Text -match 'DESCRIPTION' ) | Should -BeTrue
             }
 
             It "$ScriptName should have a EXAMPLE" -TestCases @{ Ast = $Ast } {
-                ( $Ast -match 'EXAMPLE' ) | Should -BeTrue
+                ( $Ast.Extent.Text -match 'EXAMPLE' ) | Should -BeTrue
             }
 
         }
@@ -87,7 +87,7 @@ foreach($file in $CodeFile){
         Context "Parameters of $($file.BaseName)" {
 
             It "$($file.Name) should have a function named $($file.BaseName)" -TestCases @{ Ast = $Ast; ScriptName = $ScriptName } {
-                ($Ast -match $ScriptName) | Should -be $true
+                ($Ast.Extent.Text -match "function $ScriptName") | Should -be $true
             }
 
             It "$ScriptName should have a CmdletBinding" -TestCases @{ Ast = $Ast } {

@@ -9,3 +9,4 @@ Version | Description | Date | Author
 0.0.9 | add function Get-CMASCollectionExcludeMembershipRule and enhanced Function Tests | 2026-02-12 | Josua Burkard
 0.0.10 | added Get-CMASCollectionIncludeMemberShipRule | 2026-02-13 | Josua Burkard
 0.0.11 | added Get-CMASCollectionQueryMembershipRule | 2026-02-13 | Josua Burkard
+0.0.12 | added Add-CMASCollectionMembershipRule | 2026-02-13 | Josua Burkard
