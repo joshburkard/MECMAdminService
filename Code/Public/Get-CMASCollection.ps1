@@ -43,10 +43,8 @@ function Get-CMASCollection {
 
         $res = Invoke-CMASApi -Path $path
 
-        # format results as needed, for example:
-        $collections = $res.value | Select-Object Name, CollectionID, CollectionType
-
-        return $collections
+        # Return all collection properties
+        return $res.value
     }
     catch {
         Write-Error "Failed to retrieve collections: $_"

@@ -222,6 +222,46 @@ $script:TestData = @{
             ClientOperationId = 999999999
         }
     }
+
+    # ========================================================================
+    # New-CMASCollection
+    # ========================================================================
+    'New-CMASCollection' = @{
+        DeviceCollectionByLimitingId = @{
+            Name = "Test-DeviceCollection-ByID"
+            LimitingCollectionId = "SMS00001"  # All Systems
+        }
+        DeviceCollectionByLimitingName = @{
+            Name = "Test-DeviceCollection-ByName"
+            LimitingCollectionName = "All Systems"
+        }
+        UserCollection = @{
+            Name = "Test-UserCollection"
+            CollectionType = "User"
+            LimitingCollectionId = "SMS00002"  # All Users - Replace with your limiting collection for users
+            LimitingCollectionName = "All Users"
+        }
+        WithComment = @{
+            Name = "Test-Collection-WithComment"
+            LimitingCollectionId = "SMS00001"
+            Comment = "This is a test collection created by automated tests"
+        }
+        WithPeriodicRefresh = @{
+            Name = "Test-Collection-PeriodicRefresh"
+            LimitingCollectionId = "SMS00001"
+            RefreshType = "Periodic"
+        }
+        WithContinuousRefresh = @{
+            Name = "Test-Collection-ContinuousRefresh"
+            LimitingCollectionId = "SMS00001"
+            RefreshType = "Continuous"
+        }
+        WithBothRefresh = @{
+            Name = "Test-Collection-BothRefresh"
+            LimitingCollectionId = "SMS00001"
+            RefreshType = "Both"
+        }
+    }
 }
 #endregion
 
