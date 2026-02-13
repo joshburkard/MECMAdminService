@@ -127,7 +127,9 @@ Accept wildcard characters: False
 ### -RefreshSchedule
 Optional. The schedule for periodic updates (used when RefreshType includes Periodic). Must be a valid SMS_ST_RecurInterval schedule hashtable.
 
-Example: For daily updates - @{DaySpan=1; StartTime="20250213000000.000000+***"}
+Example: For daily updates starting Feb 14, 2025 - @{DaySpan=1; StartTime="2025-02-14T00:00:00Z"}
+
+**NOTE:** RefreshSchedule is currently NOT supported via Admin Service REST API. Setting this parameter may result in a 500 Internal Server Error. Use the ConfigurationManager PowerShell module for schedule management.
 
 ```yaml
 Type: Hashtable

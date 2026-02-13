@@ -41,7 +41,7 @@ function Invoke-CMASApi {
         [string]$Path,
 
         [Parameter(Mandatory=$false)]
-        [ValidateSet("GET","POST","PUT","DELETE")]
+        [ValidateSet("GET","POST","PUT","PATCH","DELETE")]
         [string]$Method = "GET",
 
         [Parameter(Mandatory=$false)]
