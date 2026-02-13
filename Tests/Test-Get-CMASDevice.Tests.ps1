@@ -18,9 +18,57 @@ BeforeAll {
     if($script:TestSkipCertificateCheck){ $params.SkipCertificateCheck = $true }
     if($null -ne $script:TestCredential){ $params.Credential = $script:TestCredential }
     Connect-CMAS @params
+
+    # Get test data for this function
+    $script:TestDeviceData = $script:TestData['Get-CMASDevice']
 }
 
 Describe "Get-CMASDevice Function Tests" -Tag "Integration", "Device" {
+
+    Context "Test Data Validation" {
+
+        It "Should have test data defined in declarations.ps1" {
+            # Assert
+            $script:TestDeviceData | Should -Not -BeNullOrEmpty
+            $script:TestData.ContainsKey('Get-CMASDevice') | Should -Be $true
+        }
+
+        It "Should have required test data parameter sets" {
+            # Assert
+            $script:TestDeviceData.ContainsKey('ByName') | Should -Be $true
+            $script:TestDeviceData.ContainsKey('ByResourceId') | Should -Be $true
+            $script:TestDeviceData.ContainsKey('ByWildcard') | Should -Be $true
+            $script:TestDeviceData.ContainsKey('NonExistent') | Should -Be $true
+            $script:TestDeviceData.ContainsKey('All') | Should -Be $true
+        }
+
+        It "Should output test data for verification" {
+            # Output test data
+            Write-Host "`n=== Test Data for Get-CMASDevice ===" -ForegroundColor Cyan
+            Write-Host "ByName:" -ForegroundColor Yellow
+            Write-Host "  Name: $($script:TestDeviceData.ByName.Name)" -ForegroundColor White
+            Write-Host "  ExpectedCount: $($script:TestDeviceData.ByName.ExpectedCount)" -ForegroundColor White
+
+            Write-Host "ByResourceId:" -ForegroundColor Yellow
+            Write-Host "  ResourceId: $($script:TestDeviceData.ByResourceId.ResourceId)" -ForegroundColor White
+            Write-Host "  ExpectedCount: $($script:TestDeviceData.ByResourceId.ExpectedCount)" -ForegroundColor White
+
+            Write-Host "ByWildcard:" -ForegroundColor Yellow
+            Write-Host "  Name: $($script:TestDeviceData.ByWildcard.Name)" -ForegroundColor White
+            Write-Host "  ExpectedMinCount: $($script:TestDeviceData.ByWildcard.ExpectedMinCount)" -ForegroundColor White
+
+            Write-Host "NonExistent:" -ForegroundColor Yellow
+            Write-Host "  Name: $($script:TestDeviceData.NonExistent.Name)" -ForegroundColor White
+            Write-Host "  ExpectedCount: $($script:TestDeviceData.NonExistent.ExpectedCount)" -ForegroundColor White
+
+            Write-Host "All:" -ForegroundColor Yellow
+            Write-Host "  ExpectedMinCount: $($script:TestDeviceData.All.ExpectedMinCount)" -ForegroundColor White
+            Write-Host "============================================================`n" -ForegroundColor Cyan
+
+            # This test always passes, it's just for output
+            $true | Should -Be $true
+        }
+    }
 
     Context "Device Retrieval by Name" {
 

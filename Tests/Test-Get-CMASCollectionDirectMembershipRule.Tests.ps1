@@ -18,9 +18,61 @@ BeforeAll {
     if($script:TestSkipCertificateCheck){ $params.SkipCertificateCheck = $true }
     if($null -ne $script:TestCredential){ $params.Credential = $script:TestCredential }
     Connect-CMAS @params
+
+    # Get test data for this function
+    $script:TestDirectData = $script:TestData['Get-CMASCollectionDirectMembershipRule']
 }
 
 Describe "Get-CMASCollectionDirectMembershipRule Function Tests" -Tag "Integration", "Collection", "MembershipRule" {
+
+    Context "Test Data Validation" {
+
+        It "Should have test data defined in declarations.ps1" {
+            # Assert
+            $script:TestDirectData | Should -Not -BeNullOrEmpty
+            $script:TestData.ContainsKey('Get-CMASCollectionDirectMembershipRule') | Should -Be $true
+        }
+
+        It "Should have required test data parameter sets" {
+            # Assert
+            $script:TestDirectData.ContainsKey('ByCollectionName') | Should -Be $true
+            $script:TestDirectData.ContainsKey('ByCollectionId') | Should -Be $true
+            $script:TestDirectData.ContainsKey('ByCollectionNameAndResourceName') | Should -Be $true
+            $script:TestDirectData.ContainsKey('ByCollectionIdAndResourceId') | Should -Be $true
+            $script:TestDirectData.ContainsKey('WithWildcard') | Should -Be $true
+            $script:TestDirectData.ContainsKey('NonExistent') | Should -Be $true
+        }
+
+        It "Should output test data for verification" {
+            # Output test data
+            Write-Host "`n=== Test Data for Get-CMASCollectionDirectMembershipRule ===" -ForegroundColor Cyan
+            Write-Host "ByCollectionName:" -ForegroundColor Yellow
+            Write-Host "  CollectionName: $($script:TestDirectData.ByCollectionName.CollectionName)" -ForegroundColor White
+
+            Write-Host "ByCollectionId:" -ForegroundColor Yellow
+            Write-Host "  CollectionId: $($script:TestDirectData.ByCollectionId.CollectionId)" -ForegroundColor White
+
+            Write-Host "ByCollectionNameAndResourceName:" -ForegroundColor Yellow
+            Write-Host "  CollectionName: $($script:TestDirectData.ByCollectionNameAndResourceName.CollectionName)" -ForegroundColor White
+            Write-Host "  ResourceName: $($script:TestDirectData.ByCollectionNameAndResourceName.ResourceName)" -ForegroundColor White
+
+            Write-Host "ByCollectionIdAndResourceId:" -ForegroundColor Yellow
+            Write-Host "  CollectionId: $($script:TestDirectData.ByCollectionIdAndResourceId.CollectionId)" -ForegroundColor White
+            Write-Host "  ResourceId: $($script:TestDirectData.ByCollectionIdAndResourceId.ResourceId)" -ForegroundColor White
+
+            Write-Host "WithWildcard:" -ForegroundColor Yellow
+            Write-Host "  CollectionName: $($script:TestDirectData.WithWildcard.CollectionName)" -ForegroundColor White
+            Write-Host "  ResourceName: $($script:TestDirectData.WithWildcard.ResourceName)" -ForegroundColor White
+
+            Write-Host "NonExistent:" -ForegroundColor Yellow
+            Write-Host "  CollectionName: $($script:TestDirectData.NonExistent.CollectionName)" -ForegroundColor White
+            Write-Host "  CollectionId: $($script:TestDirectData.NonExistent.CollectionId)" -ForegroundColor White
+            Write-Host "============================================================`n" -ForegroundColor Cyan
+
+            # This test always passes, it's just for output
+            $true | Should -Be $true
+        }
+    }
 
     Context "Retrieval by CollectionName" {
 

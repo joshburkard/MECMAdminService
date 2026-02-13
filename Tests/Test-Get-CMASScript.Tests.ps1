@@ -18,9 +18,52 @@ BeforeAll {
     if($script:TestSkipCertificateCheck){ $params.SkipCertificateCheck = $true }
     if($null -ne $script:TestCredential){ $params.Credential = $script:TestCredential }
     Connect-CMAS @params
+
+    # Get test data for this function
+    $script:TestScriptData = $script:TestData['Get-CMASScript']
 }
 
 Describe "Get-CMASScript Function Tests" -Tag "Integration", "Script" {
+
+    Context "Test Data Validation" {
+
+        It "Should have test data defined in declarations.ps1" {
+            # Assert
+            $script:TestScriptData | Should -Not -BeNullOrEmpty
+            $script:TestData.ContainsKey('Get-CMASScript') | Should -Be $true
+        }
+
+        It "Should have required test data parameter sets" {
+            # Assert
+            $script:TestScriptData.ContainsKey('ByName') | Should -Be $true
+            $script:TestScriptData.ContainsKey('ByGuid') | Should -Be $true
+            $script:TestScriptData.ContainsKey('NonExistent') | Should -Be $true
+            $script:TestScriptData.ContainsKey('All') | Should -Be $true
+        }
+
+        It "Should output test data for verification" {
+            # Output test data
+            Write-Host "`n=== Test Data for Get-CMASScript ===" -ForegroundColor Cyan
+            Write-Host "ByName:" -ForegroundColor Yellow
+            Write-Host "  ScriptName: $($script:TestScriptData.ByName.ScriptName)" -ForegroundColor White
+            Write-Host "  ExpectedCount: $($script:TestScriptData.ByName.ExpectedCount)" -ForegroundColor White
+
+            Write-Host "ByGuid:" -ForegroundColor Yellow
+            Write-Host "  ScriptGuid: $($script:TestScriptData.ByGuid.ScriptGuid)" -ForegroundColor White
+            Write-Host "  ExpectedCount: $($script:TestScriptData.ByGuid.ExpectedCount)" -ForegroundColor White
+
+            Write-Host "NonExistent:" -ForegroundColor Yellow
+            Write-Host "  ScriptName: $($script:TestScriptData.NonExistent.ScriptName)" -ForegroundColor White
+            Write-Host "  ExpectedCount: $($script:TestScriptData.NonExistent.ExpectedCount)" -ForegroundColor White
+
+            Write-Host "All:" -ForegroundColor Yellow
+            Write-Host "  ExpectedMinCount: $($script:TestScriptData.All.ExpectedMinCount)" -ForegroundColor White
+            Write-Host "============================================================`n" -ForegroundColor Cyan
+
+            # This test always passes, it's just for output
+            $true | Should -Be $true
+        }
+    }
 
     Context "Script Retrieval by Name" {
 

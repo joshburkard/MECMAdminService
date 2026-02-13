@@ -69,6 +69,9 @@ param(
     [switch]$IncludeStructuralTests
 )
 
+Clear-Host
+Write-Host "========================================" -ForegroundColor Cyan
+
 # Ensure Pester 5.x is loaded
 if((Get-Module -Name Pester).Version -match '^3\.\d{1}\.\d{1}'){
     try {

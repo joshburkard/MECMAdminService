@@ -18,9 +18,53 @@ BeforeAll {
     if($script:TestSkipCertificateCheck){ $params.SkipCertificateCheck = $true }
     if($null -ne $script:TestCredential){ $params.Credential = $script:TestCredential }
     Connect-CMAS @params
+
+    # Get test data for this function
+    $script:TestCollectionData = $script:TestData['Get-CMASCollection']
 }
 
 Describe "Get-CMASCollection Function Tests" -Tag "Integration", "Collection" {
+
+    Context "Test Data Validation" {
+
+        It "Should have test data defined in declarations.ps1" {
+            # Assert
+            $script:TestCollectionData | Should -Not -BeNullOrEmpty
+            $script:TestData.ContainsKey('Get-CMASCollection') | Should -Be $true
+        }
+
+        It "Should have required test data parameter sets" {
+            # Assert
+            $script:TestCollectionData.ContainsKey('ByName') | Should -Be $true
+            $script:TestCollectionData.ContainsKey('ByCollectionID') | Should -Be $true
+            $script:TestCollectionData.ContainsKey('NonExistent') | Should -Be $true
+            $script:TestCollectionData.ContainsKey('All') | Should -Be $true
+        }
+
+        It "Should output test data for verification" {
+            # Output test data
+            Write-Host "`n=== Test Data for Get-CMASCollection ===" -ForegroundColor Cyan
+            Write-Host "ByName:" -ForegroundColor Yellow
+            Write-Host "  Name: $($script:TestCollectionData.ByName.Name)" -ForegroundColor White
+            Write-Host "  ExpectedCount: $($script:TestCollectionData.ByName.ExpectedCount)" -ForegroundColor White
+
+            Write-Host "ByCollectionID:" -ForegroundColor Yellow
+            Write-Host "  CollectionID: $($script:TestCollectionData.ByCollectionID.CollectionID)" -ForegroundColor White
+            Write-Host "  ExpectedCount: $($script:TestCollectionData.ByCollectionID.ExpectedCount)" -ForegroundColor White
+
+            Write-Host "NonExistent:" -ForegroundColor Yellow
+            Write-Host "  Name: $($script:TestCollectionData.NonExistent.Name)" -ForegroundColor White
+            Write-Host "  CollectionID: $($script:TestCollectionData.NonExistent.CollectionID)" -ForegroundColor White
+            Write-Host "  ExpectedCount: $($script:TestCollectionData.NonExistent.ExpectedCount)" -ForegroundColor White
+
+            Write-Host "All:" -ForegroundColor Yellow
+            Write-Host "  ExpectedMinCount: $($script:TestCollectionData.All.ExpectedMinCount)" -ForegroundColor White
+            Write-Host "============================================================`n" -ForegroundColor Cyan
+
+            # This test always passes, it's just for output
+            $true | Should -Be $true
+        }
+    }
 
     Context "Collection Retrieval by ID" {
 

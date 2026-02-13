@@ -18,9 +18,46 @@ BeforeAll {
     if($script:TestSkipCertificateCheck){ $params.SkipCertificateCheck = $true }
     if($null -ne $script:TestCredential){ $params.Credential = $script:TestCredential }
     Connect-CMAS @params
+
+    # Get test data for this function
+    $script:TestExecutionData = $script:TestData['Get-CMASScriptExecutionStatus']
 }
 
 Describe "Get-CMASScriptExecutionStatus Function Tests" -Tag "Integration", "ScriptExecution" {
+
+    Context "Test Data Validation" {
+
+        It "Should have test data defined in declarations.ps1" {
+            # Assert
+            $script:TestExecutionData | Should -Not -BeNullOrEmpty
+            $script:TestData.ContainsKey('Get-CMASScriptExecutionStatus') | Should -Be $true
+        }
+
+        It "Should have required test data parameter sets" {
+            # Assert
+            $script:TestExecutionData.ContainsKey('ByClientOperationId') | Should -Be $true
+            $script:TestExecutionData.ContainsKey('ByScriptGuidAndResourceId') | Should -Be $true
+            $script:TestExecutionData.ContainsKey('NonExistent') | Should -Be $true
+        }
+
+        It "Should output test data for verification" {
+            # Output test data
+            Write-Host "`n=== Test Data for Get-CMASScriptExecutionStatus ===" -ForegroundColor Cyan
+            Write-Host "ByClientOperationId:" -ForegroundColor Yellow
+            Write-Host "  ClientOperationId: $($script:TestExecutionData.ByClientOperationId.ClientOperationId)" -ForegroundColor White
+
+            Write-Host "ByScriptGuidAndResourceId:" -ForegroundColor Yellow
+            Write-Host "  ScriptGuid: $($script:TestExecutionData.ByScriptGuidAndResourceId.ScriptGuid)" -ForegroundColor White
+            Write-Host "  TargetResourceId: $($script:TestExecutionData.ByScriptGuidAndResourceId.TargetResourceId)" -ForegroundColor White
+
+            Write-Host "NonExistent:" -ForegroundColor Yellow
+            Write-Host "  ClientOperationId: $($script:TestExecutionData.NonExistent.ClientOperationId)" -ForegroundColor White
+            Write-Host "============================================================`n" -ForegroundColor Cyan
+
+            # This test always passes, it's just for output
+            $true | Should -Be $true
+        }
+    }
 
     Context "Status Retrieval by OperationID" {
 

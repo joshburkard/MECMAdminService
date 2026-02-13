@@ -9,9 +9,43 @@ BeforeAll {
     $CodePath = Join-Path (Get-Item $PSScriptRoot).Parent.FullName "Code"
     Get-ChildItem -Path (Join-Path $CodePath "Private") -Filter "*.ps1" | ForEach-Object { . $_.FullName }
     Get-ChildItem -Path (Join-Path $CodePath "Public") -Filter "*.ps1" | ForEach-Object { . $_.FullName }
+
+    # Get test data for this function
+    $script:TestConnectData = $script:TestData['Connect-CMAS']
 }
 
 Describe "Connect-CMAS Function Tests" -Tag "Integration", "Connection" {
+
+    Context "Test Data Validation" {
+
+        It "Should have test data defined in declarations.ps1" {
+            # Assert
+            $script:TestConnectData | Should -Not -BeNullOrEmpty
+            $script:TestData.ContainsKey('Connect-CMAS') | Should -Be $true
+        }
+
+        It "Should have required test data parameter sets" {
+            # Assert
+            $script:TestConnectData.ContainsKey('Valid') | Should -Be $true
+            $script:TestConnectData.ContainsKey('Invalid') | Should -Be $true
+        }
+
+        It "Should output test data for verification" {
+            # Output test data
+            Write-Host "`n=== Test Data for Connect-CMAS ===" -ForegroundColor Cyan
+            Write-Host "Valid:" -ForegroundColor Yellow
+            Write-Host "  SiteServer: $($script:TestConnectData.Valid.SiteServer)" -ForegroundColor White
+            Write-Host "  SkipCertificateCheck: $($script:TestConnectData.Valid.SkipCertificateCheck)" -ForegroundColor White
+            Write-Host "  Credential: $(if($script:TestConnectData.Valid.Credential){'Configured'}else{'Not Configured'})" -ForegroundColor White
+
+            Write-Host "Invalid:" -ForegroundColor Yellow
+            Write-Host "  SiteServer: $($script:TestConnectData.Invalid.SiteServer)" -ForegroundColor White
+            Write-Host "============================================================`n" -ForegroundColor Cyan
+
+            # This test always passes, it's just for output
+            $true | Should -Be $true
+        }
+    }
 
     Context "Connection Establishment" {
 

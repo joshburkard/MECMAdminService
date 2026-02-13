@@ -18,9 +18,61 @@ BeforeAll {
     if($script:TestSkipCertificateCheck){ $params.SkipCertificateCheck = $true }
     if($null -ne $script:TestCredential){ $params.Credential = $script:TestCredential }
     Connect-CMAS @params
+
+    # Get test data for this function
+    $script:TestExcludeData = $script:TestData['Get-CMASCollectionExcludeMembershipRule']
 }
 
 Describe "Get-CMASCollectionExcludeMembershipRule Function Tests" -Tag "Integration", "Collection", "MembershipRule" {
+
+    Context "Test Data Validation" {
+
+        It "Should have test data defined in declarations.ps1" {
+            # Assert
+            $script:TestExcludeData | Should -Not -BeNullOrEmpty
+            $script:TestData.ContainsKey('Get-CMASCollectionExcludeMembershipRule') | Should -Be $true
+        }
+
+        It "Should have required test data parameter sets" {
+            # Assert
+            $script:TestExcludeData.ContainsKey('ByCollectionName') | Should -Be $true
+            $script:TestExcludeData.ContainsKey('ByCollectionId') | Should -Be $true
+            $script:TestExcludeData.ContainsKey('ByCollectionNameAndExcludeName') | Should -Be $true
+            $script:TestExcludeData.ContainsKey('ByCollectionIdAndExcludeId') | Should -Be $true
+            $script:TestExcludeData.ContainsKey('WithWildcard') | Should -Be $true
+            $script:TestExcludeData.ContainsKey('NonExistent') | Should -Be $true
+        }
+
+        It "Should output test data for verification" {
+            # Output test data
+            Write-Host "`n=== Test Data for Get-CMASCollectionExcludeMembershipRule ===" -ForegroundColor Cyan
+            Write-Host "ByCollectionName:" -ForegroundColor Yellow
+            Write-Host "  CollectionName: $($script:TestExcludeData.ByCollectionName.CollectionName)" -ForegroundColor White
+
+            Write-Host "ByCollectionId:" -ForegroundColor Yellow
+            Write-Host "  CollectionId: $($script:TestExcludeData.ByCollectionId.CollectionId)" -ForegroundColor White
+
+            Write-Host "ByCollectionNameAndExcludeName:" -ForegroundColor Yellow
+            Write-Host "  CollectionName: $($script:TestExcludeData.ByCollectionNameAndExcludeName.CollectionName)" -ForegroundColor White
+            Write-Host "  ExcludeCollectionName: $($script:TestExcludeData.ByCollectionNameAndExcludeName.ExcludeCollectionName)" -ForegroundColor White
+
+            Write-Host "ByCollectionIdAndExcludeId:" -ForegroundColor Yellow
+            Write-Host "  CollectionId: $($script:TestExcludeData.ByCollectionIdAndExcludeId.CollectionId)" -ForegroundColor White
+            Write-Host "  ExcludeCollectionId: $($script:TestExcludeData.ByCollectionIdAndExcludeId.ExcludeCollectionId)" -ForegroundColor White
+
+            Write-Host "WithWildcard:" -ForegroundColor Yellow
+            Write-Host "  CollectionName: $($script:TestExcludeData.WithWildcard.CollectionName)" -ForegroundColor White
+            Write-Host "  ExcludeCollectionName: $($script:TestExcludeData.WithWildcard.ExcludeCollectionName)" -ForegroundColor White
+
+            Write-Host "NonExistent:" -ForegroundColor Yellow
+            Write-Host "  CollectionName: $($script:TestExcludeData.NonExistent.CollectionName)" -ForegroundColor White
+            Write-Host "  CollectionId: $($script:TestExcludeData.NonExistent.CollectionId)" -ForegroundColor White
+            Write-Host "============================================================`n" -ForegroundColor Cyan
+
+            # This test always passes, it's just for output
+            $true | Should -Be $true
+        }
+    }
 
     Context "Retrieval by CollectionName" {
 

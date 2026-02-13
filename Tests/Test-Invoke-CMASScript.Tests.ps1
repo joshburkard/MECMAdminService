@@ -21,9 +21,51 @@ BeforeAll {
     if($script:TestSkipCertificateCheck){ $params.SkipCertificateCheck = $true }
     if($null -ne $script:TestCredential){ $params.Credential = $script:TestCredential }
     Connect-CMAS @params
+
+    # Get test data for this function
+    $script:TestInvokeData = $script:TestData['Invoke-CMASScript']
 }
 
 Describe "Invoke-CMASScript Function Tests" -Tag "Integration", "ScriptExecution" {
+
+    Context "Test Data Validation" {
+
+        It "Should have test data defined in declarations.ps1" {
+            # Assert
+            $script:TestInvokeData | Should -Not -BeNullOrEmpty
+            $script:TestData.ContainsKey('Invoke-CMASScript') | Should -Be $true
+        }
+
+        It "Should have required test data parameter sets" {
+            # Assert
+            $script:TestInvokeData.ContainsKey('ByScriptNameAndDeviceName') | Should -Be $true
+            $script:TestInvokeData.ContainsKey('ByScriptGuidAndResourceId') | Should -Be $true
+            $script:TestInvokeData.ContainsKey('ByScriptNameAndCollectionId') | Should -Be $true
+        }
+
+        It "Should output test data for verification" {
+            # Output test data
+            Write-Host "`n=== Test Data for Invoke-CMASScript ===" -ForegroundColor Cyan
+            Write-Host "ByScriptNameAndDeviceName:" -ForegroundColor Yellow
+            Write-Host "  ScriptName: $($script:TestInvokeData.ByScriptNameAndDeviceName.ScriptName)" -ForegroundColor White
+            Write-Host "  DeviceName: $($script:TestInvokeData.ByScriptNameAndDeviceName.DeviceName)" -ForegroundColor White
+            Write-Host "  ScriptParameters: $($script:TestInvokeData.ByScriptNameAndDeviceName.ScriptParameters | ConvertTo-Json -Compress)" -ForegroundColor White
+
+            Write-Host "ByScriptGuidAndResourceId:" -ForegroundColor Yellow
+            Write-Host "  ScriptGuid: $($script:TestInvokeData.ByScriptGuidAndResourceId.ScriptGuid)" -ForegroundColor White
+            Write-Host "  ResourceId: $($script:TestInvokeData.ByScriptGuidAndResourceId.ResourceId)" -ForegroundColor White
+            Write-Host "  ScriptParameters: $($script:TestInvokeData.ByScriptGuidAndResourceId.ScriptParameters | ConvertTo-Json -Compress)" -ForegroundColor White
+
+            Write-Host "ByScriptNameAndCollectionId:" -ForegroundColor Yellow
+            Write-Host "  ScriptName: $($script:TestInvokeData.ByScriptNameAndCollectionId.ScriptName)" -ForegroundColor White
+            Write-Host "  CollectionId: $($script:TestInvokeData.ByScriptNameAndCollectionId.CollectionId)" -ForegroundColor White
+            Write-Host "  ScriptParameters: $($script:TestInvokeData.ByScriptNameAndCollectionId.ScriptParameters | ConvertTo-Json -Compress)" -ForegroundColor White
+            Write-Host "============================================================`n" -ForegroundColor Cyan
+
+            # This test always passes, it's just for output
+            $true | Should -Be $true
+        }
+    }
 
     Context "Parameter Validation" {
 
