@@ -687,9 +687,48 @@ Once your PR is approved and merged:
 
 To protect the `main` branch from direct pushes, configure these settings on GitHub:
 
-#### Branch Protection Rules
+#### Option 1: Branch Rulesets (Recommended - Modern Interface)
 
-1. Navigate to **Settings** → **Branches** → **Add rule**
+1. Navigate to **Settings** → **Branches** → **Add branch ruleset**
+2. Configure the ruleset:
+
+**Ruleset Name**: `Protect main branch`
+
+**Enforcement status**: Active
+
+**Target branches**:
+- Click **Add target** → **Include by pattern**
+- Enter pattern: `main` (or `master`)
+
+**Rules** - Enable the following:
+- ✅ **Require a pull request before merging**
+  - Required approvals: **1** (or more)
+  - Dismiss stale pull request approvals when new commits are pushed
+  - Require approval of the most recent reviewable push
+
+- ✅ **Require status checks to pass**
+  - Require branches to be up to date before merging
+  - Add status checks from CI/CD pipeline (if configured)
+
+- ✅ **Require conversation resolution before merging**
+- ✅ **Require signed commits** (optional, but recommended for security)
+- ✅ **Require linear history** (prevents merge commits, keeps clean history)
+- ✅ **Block force pushes**
+
+**Bypass list**:
+- Leave empty to apply rules to everyone (recommended), or
+- Add specific users/teams who can bypass (use sparingly)
+
+**Target**:
+- ✅ Include administrators (enforces rules for everyone, including repo owners)
+
+3. Click **Create** to save the ruleset
+
+#### Option 2: Branch Protection Rules (Classic Interface)
+
+If you don't see "Branch rulesets", you may be using the classic interface:
+
+1. Navigate to **Settings** → **Branches** → **Add rule** (under "Branch protection rules")
 2. Branch name pattern: `main` (or `master`)
 3. Enable the following:
 
@@ -710,14 +749,11 @@ To protect the `main` branch from direct pushes, configure these settings on Git
 
 **Rules applied to everyone:**
 - ✅ Restrict who can push to matching branches
-  - Only allow specific people or teams
-  - Or: Allow no one (all changes via PR only)
+  - Select: Allow no one (all changes via PR only)
 
-### Local Branch Protection (For All Contributors)
+4. Click **Create** or **Save changes**
 
-Add a git hook to prevent accidental commits to main:
-
-```powershell
+> **Note**: GitHub is transitioning from "Branch protection rules" to "Branch rulesets". Both work, but rulesets offer more flexibility and are the recommended approach for new repositories.
 # Create pre-commit hook
 $hookPath = ".git\hooks\pre-commit"
 $hookContent = @'
