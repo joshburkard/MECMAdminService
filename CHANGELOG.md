@@ -7,3 +7,4 @@ Version | Description | Date | Author
 0.0.7 | Added GetCMASCollectionDirectMembershipRule | 2026-02-11 | Josua Burkard
 0.0.8 | add Get-CMASCollectionDirectMembershipRule | 2026-02-11 | Josua Burkard
 0.0.9 | add function Get-CMASCollectionExcludeMembershipRule and enhanced Function Tests | 2026-02-12 | Josua Burkard
+0.0.10 | added Get-CMASCollectionIncludeMemberShipRule | 2026-02-13 | Josua Burkard
