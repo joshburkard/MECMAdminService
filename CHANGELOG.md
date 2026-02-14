@@ -16,3 +16,4 @@ Version | Description | Date | Author
 0.3.0 | added Set-CMASCollection | 2026-02-13 | Josua Burkard
 0.4.0 | added Set-CMASCollectionSchedule | 2026-02-14 | Josua Burkard
 0.5.0 | added Invoke-CMASCollectionUpdate | 2026-02-14 | Josua Burkard
+0.6.0 | added New-CMASDeviceVariable | 2026-02-14 | Josua Burkard
