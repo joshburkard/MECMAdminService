@@ -7,16 +7,16 @@ A PowerShell module for managing Microsoft Endpoint Configuration Manager (MECM)
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
+- [Overview](#-overview)
 - [What is the Admin Service?](#what-is-the-admin-service)
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Getting Started](#getting-started)
-- [Available Functions](#available-functions)
-- [Usage Examples](#usage-examples)
-- [Contributing](#contributing)
-- [License](#license)
+- [Features](#-features)
+- [Requirements](#-requirements)
+- [Installation](#-installation)
+- [Getting Started](#-getting-started)
+- [Available Functions](#-available-functions)
+- [Usage Examples](#-usage-examples)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ## 🎯 Overview
 
