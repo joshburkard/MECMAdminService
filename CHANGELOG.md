@@ -19,3 +19,5 @@ Version | Description | Date | Author
 0.6.0 | added New-CMASDeviceVariable | 2026-02-14 | Josua Burkard
 0.6.1 |  | 2026-02-14 | Josua Burkard
 0.6.1 | added Get-CMASDeviceVariable | 2026-02-14 | Josua Burkard
+0.6.2 | added Get-CMASDeviceVariable | 2026-02-14 | Josua Burkard
+0.6.2 | added Remove-CMASDeviceVariable | 2026-02-14 | Josua Burkard

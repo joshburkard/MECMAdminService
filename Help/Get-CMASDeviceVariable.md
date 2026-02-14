@@ -6,16 +6,19 @@ Gets device variables for a Configuration Manager device via the Admin Service.
 ## SYNTAX
 
 ### ByDeviceName (Default)
+
 ```powershell
 Get-CMASDeviceVariable [-DeviceName] <String> [-VariableName <String>] [<CommonParameters>]
 ```
 
 ### ByResourceID
+
 ```powershell
 Get-CMASDeviceVariable [-ResourceID] <Int64> [-VariableName <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 This function retrieves custom variables that are assigned to a specific device in Configuration Manager using the Admin Service API. Device variables are name-value pairs that can be used in task sequences, scripts, and other Configuration Manager operations.
 
 The function supports identifying the target device by either device name or ResourceID. You can optionally filter the results to specific variable names using wildcard patterns.
@@ -23,6 +26,7 @@ The function supports identifying the target device by either device name or Res
 ## PARAMETERS
 
 ### -DeviceName
+
 The name of the device to retrieve variables from. Either DeviceName or ResourceID must be specified.
 
 ```yaml
@@ -38,6 +42,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceID
+
 The ResourceID of the device to retrieve variables from. Either DeviceName or ResourceID must be specified.
 
 ```yaml
