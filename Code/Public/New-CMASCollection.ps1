@@ -41,17 +41,6 @@ function New-CMASCollection {
             - Both (6): Periodic and Continuous (2 + 4)
             Default is Manual.
 
-        .PARAMETER RefreshSchedule
-            Optional. The schedule for periodic updates (used when RefreshType includes Periodic).
-            Must be a valid SMS_ST_RecurInterval schedule hashtable.
-            Example: For daily updates starting Feb 14, 2025 - @{DaySpan=1; StartTime="2025-02-14T00:00:00Z"}
-
-            NOTE: RefreshSchedule is currently NOT supported via Admin Service REST API.
-            Setting this parameter may result in a 500 Internal Server Error.
-            Use the ConfigurationManager PowerShell module for schedule management.
-
-        .PARAMETER PassThru
-            Returns the created collection object.
 
         .EXAMPLE
             New-CMASCollection -Name "My Device Collection" -LimitingCollectionName "All Systems"
@@ -68,14 +57,6 @@ function New-CMASCollection {
         .EXAMPLE
             New-CMASCollection -Name "Production Servers" -LimitingCollectionId "SMS00001" -RefreshType Both -PassThru
             Creates a device collection with both periodic and continuous refresh, returning the collection object.
-
-        .EXAMPLE
-            $schedule = @{
-                DaySpan = 1
-                StartTime = (Get-Date).AddHours(1).ToString("yyyyMMddHHmmss.000000+***")
-            }
-            New-CMASCollection -Name "Scheduled Collection" -LimitingCollectionName "All Systems" -RefreshType Periodic -RefreshSchedule $schedule
-            Creates a collection with a custom daily refresh schedule.
 
         .NOTES
             This function is part of the SCCM Admin Service module.
@@ -125,9 +106,6 @@ function New-CMASCollection {
         [string]$RefreshType = 'Manual',
 
         [Parameter(Mandatory=$false)]
-        [hashtable]$RefreshSchedule,
-
-        [Parameter(Mandatory=$false)]
         [switch]$PassThru
     )
 
@@ -164,9 +142,10 @@ function New-CMASCollection {
             default { 1 }
         }
 
-        # Validate RefreshSchedule is provided if RefreshType includes Periodic
-        if (($refreshTypeInt -eq 2 -or $refreshTypeInt -eq 6) -and -not $RefreshSchedule) {
-            Write-Warning "RefreshType includes Periodic updates but no RefreshSchedule was provided. Using default schedule."
+        # Inform about schedule behavior when RefreshType includes Periodic
+        if ($refreshTypeInt -eq 2 -or $refreshTypeInt -eq 6) {
+            Write-Verbose "RefreshType set to Periodic/Both. The collection will use a default schedule."
+            Write-Verbose "Note: To set a custom schedule, use Set-CMASCollectionSchedule function after creating the collection."
         }
     }
 
@@ -216,21 +195,9 @@ function New-CMASCollection {
                 $newCollection.Comment = $Comment
             }
 
-            # Add refresh schedule if provided and RefreshType includes Periodic
-            if ($RefreshSchedule -and ($refreshTypeInt -eq 2 -or $refreshTypeInt -eq 6)) {
-                # Build SMS_ST_RecurInterval object
-                $scheduleToken = @{
-                    '@odata.type' = '#AdminService.SMS_ST_RecurInterval'
-                }
-
-                # Add schedule properties from the provided hashtable
-                foreach ($key in $RefreshSchedule.Keys) {
-                    $scheduleToken[$key] = $RefreshSchedule[$key]
-                }
-
-                # Admin Service expects RefreshSchedule as array (Collection type)
-                $newCollection.RefreshSchedule = @($scheduleToken)
-            }
+            # RefreshSchedule updates are blocked in the begin block
+            # This code is never reached but kept for reference
+            # The Admin Service API does not support RefreshSchedule operations
 
             $description = "collection '$Name' (Type: $CollectionType, Limiting: $targetLimitingCollectionId)"
 

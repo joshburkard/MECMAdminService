@@ -39,8 +39,13 @@ if(Test-Path -Path $Settings){
     if (!$prompt -eq "") {
         $ModuleVersion = $prompt
     }else{
-        $ModuleVersion = [Version]$ModuleSettings.ModuleVersion
-        $ModuleVersion = "{0}.{1}.{2}" -f $ModuleVersion.Major, $ModuleVersion.Minor, ($ModuleVersion.Build + 1)
+        if ( $ModuleSettings.ModuleVersion -eq $ModuleVersion ) {
+            $ModuleVersion = [Version]$ModuleSettings.ModuleVersion
+            $ModuleVersion = "{0}.{1}.{2}" -f $ModuleVersion.Major, $ModuleVersion.Minor, ($ModuleVersion.Build + 1)
+        }
+        else {
+            $ModuleVersion = [Version]$ModuleSettings.ModuleVersion
+        }
     }
     $ModuleAuthor      = $ModuleSettings.ModuleAuthor
     $ModuleCompany     = $ModuleSettings.ModuleCompany

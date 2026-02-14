@@ -11,8 +11,10 @@ function Set-CMASCollection {
             - Name: Change the collection name
             - Comment: Add or modify the collection description
             - RefreshType: Change between Manual, Periodic, Continuous, or Both
-            - RefreshSchedule: Update the schedule for periodic updates
             - LimitingCollectionId/Name: Change the limiting collection (use with caution)
+
+            Note: RefreshSchedule updates are NOT supported via Admin Service API.
+            Use Set-CMASCollectionSchedule (CIM-based) to manage collection schedules.
 
             The function uses the Admin Service REST API to PATCH the SMS_Collection WMI class instance.
 
@@ -39,17 +41,6 @@ function Set-CMASCollection {
             - Continuous (4): Incremental updates (continuous evaluation)
             - Both (6): Periodic and Continuous (2 + 4)
 
-        .PARAMETER RefreshSchedule
-            The new schedule for periodic updates (used when RefreshType includes Periodic).
-            Must be a valid SMS_ST_RecurInterval schedule hashtable.
-            Example: For daily updates starting Feb 14, 2025 - @{DaySpan=1; StartTime="2025-02-14T00:00:00Z"}
-
-            NOTE: RefreshSchedule updates are currently NOT supported via Admin Service REST API.
-            Setting this parameter may result in a 500 Internal Server Error.
-            Use the ConfigurationManager PowerShell module for schedule management.
-
-        .PARAMETER LimitingCollectionId
-            The CollectionID of the new limiting collection. Use with caution as this can affect membership.
 
         .PARAMETER LimitingCollectionName
             The name of the new limiting collection. The function will look up the CollectionID automatically.
@@ -70,9 +61,9 @@ function Set-CMASCollection {
             Changes the refresh type to continuous and updates the comment.
 
         .EXAMPLE
-            $schedule = @{DaySpan=1; StartTime="20250213000000.000000+***"}
-            Set-CMASCollection -CollectionName "Daily Collection" -RefreshType Periodic -RefreshSchedule $schedule
-            Updates the collection to use a daily periodic refresh schedule.
+            Set-CMASCollection -CollectionName "My Collection" -RefreshType Periodic
+            Changes the refresh type to periodic. The collection will use its existing schedule or a default schedule.
+            Note: RefreshSchedule cannot be updated via Admin Service API. Use SCCM Console or ConfigurationManager module.
 
         .EXAMPLE
             Get-CMASCollection -Name "Test*" | Set-CMASCollection -Comment "Test collection" -RefreshType Manual
@@ -95,7 +86,8 @@ function Set-CMASCollection {
             Important considerations:
             - Changing the limiting collection can cause members to be removed if they don't match the new limiting collection
             - Collection names must be unique across all collections in Configuration Manager
-            - When changing RefreshType to/from Periodic, ensure RefreshSchedule is set appropriately
+            - When changing RefreshType to Periodic, the collection will use its existing schedule or a default schedule
+            - To update RefreshSchedule, use Set-CMASCollectionSchedule function
 
             Refresh Types:
             - 1 = Manual only
@@ -108,6 +100,7 @@ function Set-CMASCollection {
             Get-CMASCollection
             New-CMASCollection
             Remove-CMASCollection
+            Set-CMASCollectionSchedule
     #>
     [CmdletBinding(DefaultParameterSetName='ByName', SupportsShouldProcess=$true, ConfirmImpact='Medium')]
     param(
@@ -137,9 +130,6 @@ function Set-CMASCollection {
         [string]$RefreshType,
 
         [Parameter(Mandatory=$false)]
-        [hashtable]$RefreshSchedule,
-
-        [Parameter(Mandatory=$false)]
         [string]$LimitingCollectionId,
 
         [Parameter(Mandatory=$false)]
@@ -157,9 +147,8 @@ function Set-CMASCollection {
 
         # Check if at least one property to update is specified
         if (-not $NewName -and -not $PSBoundParameters.ContainsKey('Comment') -and
-            -not $RefreshType -and -not $RefreshSchedule -and
-            -not $LimitingCollectionId -and -not $LimitingCollectionName) {
-            throw "At least one property to update must be specified (NewName, Comment, RefreshType, RefreshSchedule, or LimitingCollection)."
+            -not $RefreshType -and -not $LimitingCollectionId -and -not $LimitingCollectionName) {
+            throw "At least one property to update must be specified (NewName, Comment, RefreshType, or LimitingCollection)."
         }
 
         # Convert RefreshType string to integer if provided
@@ -178,9 +167,10 @@ function Set-CMASCollection {
             }
         }
 
-        # Validate RefreshSchedule is provided if RefreshType includes Periodic
-        if ($refreshTypeInt -and ($refreshTypeInt -eq 2 -or $refreshTypeInt -eq 6) -and -not $RefreshSchedule) {
-            Write-Warning "RefreshType includes Periodic updates but no RefreshSchedule was provided. The existing schedule will be kept or a default schedule will be used."
+        # Inform about schedule behavior when RefreshType includes Periodic
+        if ($refreshTypeInt -and ($refreshTypeInt -eq 2 -or $refreshTypeInt -eq 6)) {
+            Write-Verbose "RefreshType set to Periodic/Both. The collection will keep its existing schedule or use a default schedule."
+            Write-Verbose "Note: To update RefreshSchedule, use the Set-CMASCollectionSchedule function."
         }
     }
 
@@ -286,22 +276,9 @@ function Set-CMASCollection {
                 $changeDescription += "RefreshType: $($targetCollection.RefreshType) -> $refreshTypeInt"
             }
 
-            # Update RefreshSchedule
-            if ($RefreshSchedule) {
-                # Build SMS_ST_RecurInterval object
-                $scheduleToken = @{
-                    '@odata.type' = '#AdminService.SMS_ST_RecurInterval'
-                }
-
-                # Add schedule properties from the provided hashtable
-                foreach ($key in $RefreshSchedule.Keys) {
-                    $scheduleToken[$key] = $RefreshSchedule[$key]
-                }
-
-                # PUT operations require RefreshSchedule as array (Collection type)
-                $updateObject.RefreshSchedule = @($scheduleToken)
-                $changeDescription += "RefreshSchedule updated"
-            }
+            # Note: RefreshSchedule updates are blocked in the begin block
+            # The Admin Service API does not support RefreshSchedule operations
+            # Use Set-CMASCollectionSchedule instead for schedule management via CIM
 
             # Update LimitingCollection
             $targetLimitingCollectionId = $null

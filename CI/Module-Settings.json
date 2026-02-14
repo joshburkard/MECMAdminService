@@ -1,9 +1,9 @@
 {
   "ModuleName": "MECMAdminService",
-  "ModuleVersion": "0.3.0",
+  "ModuleVersion": "0.4.0",
   "ModuleDescription": "manageging MECM / SCCM through Admin Service",
   "ModuleAuthor": "Josua Burkard",
   "ModuleCompany": "Josua Burkard",
   "ModulePrefix": "CMAS",
-  "LastChange": "added Set-CMASCollection"
+  "LastChange": "added Set-CMASCollectionSchedule"
 }

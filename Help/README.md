@@ -21,3 +21,4 @@ This documentation provides details on the functions available in the MECM Admin
 | [Remove-CMASCollection](./Remove-CMASCollection.md) | Removes a Configuration Manager collection via the Admin Service. |
 | [Remove-CMASCollectionMembershipRule](./Remove-CMASCollectionMembershipRule.md) | Removes a membership rule from a Configuration Manager collection. |
 | [Set-CMASCollection](./Set-CMASCollection.md) | Modifies properties of a Configuration Manager collection via the Admin Service. |
+| [Set-CMASCollectionSchedule](./Set-CMASCollectionSchedule.md) | Sets the schedule for a collection. |
