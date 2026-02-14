@@ -14,7 +14,8 @@ This documentation provides details on the functions available in the MECM Admin
 | [Get-CMASCollectionIncludeMembershipRule](./Get-CMASCollectionIncludeMembershipRule.md) | Retrieves include membership rules from a Configuration Manager collection. |
 | [Get-CMASCollectionQueryMembershipRule](./Get-CMASCollectionQueryMembershipRule.md) | Retrieves query membership rules from a Configuration Manager collection. |
 | [Get-CMASDevice](./Get-CMASDevice.md) | Retrieves information about devices from the SCCM Admin Service. |
-| [Get-CMASScript](./Get-CMASScript.md) | List CMScripts from AdminService. |
+| [Get-CMASDeviceVariable](./Get-CMASDeviceVariable.md) | Gets device variables for a Configuration Manager device via the Admin Service. |
+| [Get-CMASScript](./Get-CMASScript.md) | List CMScripts from AdminService |
 | [Get-CMASScriptExecutionStatus](./Get-CMASScriptExecutionStatus.md) | Returns the current status of a SCCM Script execution via Admin Service. |
 | [Invoke-CMASCollectionUpdate](./Invoke-CMASCollectionUpdate.md) | Triggers a membership update for a Configuration Manager collection via the Admin Service. |
 | [Invoke-CMASScript](./Invoke-CMASScript.md) | Executes an approved SCCM script on clients using the Admin Service. |
@@ -23,4 +24,4 @@ This documentation provides details on the functions available in the MECM Admin
 | [Remove-CMASCollection](./Remove-CMASCollection.md) | Removes a Configuration Manager collection via the Admin Service. |
 | [Remove-CMASCollectionMembershipRule](./Remove-CMASCollectionMembershipRule.md) | Removes a membership rule from a Configuration Manager collection. |
 | [Set-CMASCollection](./Set-CMASCollection.md) | Modifies properties of a Configuration Manager collection via the Admin Service. |
-| [Set-CMASCollectionSchedule](./Set-CMASCollectionSchedule.md) | Sets the schedule for a collection. |
+| [Set-CMASCollectionSchedule](./Set-CMASCollectionSchedule.md) | Sets the refresh schedule for a collection using CIM cmdlets. |

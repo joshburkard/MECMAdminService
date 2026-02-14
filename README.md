@@ -208,9 +208,18 @@ Get-Help Invoke-CMASScript -Detailed
 
 ### Device Management
 - `Get-CMASDevice` - Retrieve Configuration Manager device information
+- `Get-CMASDeviceVariable` - Get device variables for Configuration Manager devices
+- `New-CMASDeviceVariable` - Create new device variables for Configuration Manager devices
 
 ### Collection Management
 - `Get-CMASCollection` - Retrieve Configuration Manager collections
+- `New-CMASCollection` - Create new Configuration Manager collections
+- `Set-CMASCollection` - Modify properties of Configuration Manager collections
+- `Remove-CMASCollection` - Remove Configuration Manager collections
+- `Invoke-CMASCollectionUpdate` - Trigger membership updates for collections
+- `Set-CMASCollectionSchedule` - Set refresh schedules for collections
+
+### Collection Membership Rules
 - `Get-CMASCollectionDirectMembershipRule` - Get direct membership rules from collections
 - `Get-CMASCollectionExcludeMembershipRule` - Get exclude membership rules from collections
 - `Get-CMASCollectionIncludeMembershipRule` - Get include membership rules from collections
