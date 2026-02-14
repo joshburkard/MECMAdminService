@@ -211,6 +211,7 @@ Get-Help Invoke-CMASScript -Detailed
 - `Get-CMASDeviceVariable` - Get device variables for Configuration Manager devices
 - `New-CMASDeviceVariable` - Create new device variables for Configuration Manager devices
 - `Remove-CMASDeviceVariable` - Remove device variables from Configuration Manager devices
+- `Set-CMASDeviceVariable` - Modify existing device variables for Configuration Manager devices
 
 ### Collection Management
 - `Get-CMASCollection` - Retrieve Configuration Manager collections

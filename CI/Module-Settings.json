@@ -1,9 +1,9 @@
 {
   "ModuleName": "MECMAdminService",
-  "ModuleVersion": "0.6.2",
+  "ModuleVersion": "0.6.3",
   "ModuleDescription": "managing MECM / SCCM through Admin Service",
   "ModuleAuthor": "Josua Burkard",
   "ModuleCompany": "Josua Burkard",
   "ModulePrefix": "CMAS",
-  "LastChange": "added Remove-CMASDeviceVariable"
+  "LastChange": "added Set-CMASDeviceVariable"
 }
