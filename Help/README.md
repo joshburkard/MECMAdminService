@@ -16,6 +16,7 @@ This documentation provides details on the functions available in the MECM Admin
 | [Get-CMASDevice](./Get-CMASDevice.md) | Retrieves information about devices from the SCCM Admin Service. |
 | [Get-CMASScript](./Get-CMASScript.md) | List CMScripts from AdminService. |
 | [Get-CMASScriptExecutionStatus](./Get-CMASScriptExecutionStatus.md) | Returns the current status of a SCCM Script execution via Admin Service. |
+| [Invoke-CMASCollectionUpdate](./Invoke-CMASCollectionUpdate.md) | Triggers a membership update for a Configuration Manager collection via the Admin Service. |
 | [Invoke-CMASScript](./Invoke-CMASScript.md) | Executes an approved SCCM script on clients using the Admin Service. |
 | [New-CMASCollection](./New-CMASCollection.md) | Creates a new Configuration Manager collection via the Admin Service. |
 | [Remove-CMASCollection](./Remove-CMASCollection.md) | Removes a Configuration Manager collection via the Admin Service. |
