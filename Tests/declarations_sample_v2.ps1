@@ -622,6 +622,54 @@ $script:TestData = @{
     }
 
     # ========================================================================
+    # Set-CMASCollectionVariable
+    # ========================================================================
+    'Set-CMASCollectionVariable' = @{
+        ByCollectionName = @{
+            CollectionName = "Test-Collection-Direct"
+            VariableName = "TestCollVar_Set"  # Will be made unique with timestamp in tests
+            OriginalValue = "OriginalValue"
+            NewValue = "ModifiedValue123"
+        }
+        ByCollectionId = @{
+            CollectionId = "SD101C00"  # Replace with test collection ID
+            VariableName = "TestCollVar_SetByID"  # Will be made unique with timestamp in tests
+            OriginalValue = "OriginalValueByID"
+            NewValue = "ModifiedValueByID"
+        }
+        ChangeMaskedState = @{
+            CollectionName = "Test-Collection-Direct"
+            VariableName = "TestCollVar_Mask"  # Will be made unique with timestamp in tests
+            OriginalValue = "ValueToMask"
+            NewValue = "ValueToMask"  # Keep value same, just change masked state
+            IsMasked = $true
+        }
+        UnmaskVariable = @{
+            CollectionName = "Test-Collection-Direct"
+            VariableName = "TestCollVar_Unmask"  # Will be made unique with timestamp in tests
+            OriginalValue = "MaskedValue"
+            NewValue = "UnmaskedValue"
+            IsNotMasked = $true
+        }
+        EmptyValue = @{
+            CollectionName = "Test-Collection-Direct"
+            VariableName = "TestCollVar_SetEmpty"  # Will be made unique with timestamp in tests
+            OriginalValue = "SomeValue"
+            NewValue = ""
+        }
+        NonExistentCollection = @{
+            CollectionName = "NONEXISTENT-COLLECTION-999"
+            VariableName = "TestVar"
+            NewValue = "ShouldFail"
+        }
+        NonExistentVariable = @{
+            CollectionName = "Test-Collection-Direct"
+            VariableName = "NonExistentCollVar999"
+            NewValue = "ShouldFail"
+        }
+    }
+
+    # ========================================================================
     # New-CMASDeviceVariable
     # ========================================================================
     'New-CMASDeviceVariable' = @{

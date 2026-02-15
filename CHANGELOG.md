@@ -25,3 +25,4 @@ Version | Description | Date | Author
 0.6.4 | added Get-CMASCollectionVariable | 2026-02-15 | Josua Burkard
 0.6.5 | added New-CMASCollectionVariable | 2026-02-15 | Josua Burkard
 0.6.6 | add Remove-CMASCollectionVariable | 2026-02-15 | Josua Burkard
+0.6.7 | added Set-MCASCollectionVariable | 2026-02-15 | Josua Burkard
