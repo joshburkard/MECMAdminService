@@ -25,6 +25,7 @@ This documentation provides details on the functions available in the MECM Admin
 | [New-CMASDeviceVariable](./New-CMASDeviceVariable.md) | Creates a new device variable for a Configuration Manager device via the Admin Service. |
 | [Remove-CMASCollection](./Remove-CMASCollection.md) | Removes a Configuration Manager collection via the Admin Service. |
 | [Remove-CMASCollectionMembershipRule](./Remove-CMASCollectionMembershipRule.md) | Removes a membership rule from a Configuration Manager collection. |
+| [Remove-CMASCollectionVariable](./Remove-CMASCollectionVariable.md) | Removes collection variables from a Configuration Manager collection via the Admin Service. |
 | [Remove-CMASDeviceVariable](./Remove-CMASDeviceVariable.md) | Removes device variables from a Configuration Manager device via the Admin Service. |
 | [Set-CMASCollection](./Set-CMASCollection.md) | Modifies properties of a Configuration Manager collection via the Admin Service. |
 | [Set-CMASCollectionSchedule](./Set-CMASCollectionSchedule.md) | Sets the refresh schedule for a collection using CIM cmdlets. |

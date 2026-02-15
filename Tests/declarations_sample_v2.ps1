@@ -596,6 +596,32 @@ $script:TestData = @{
     }
 
     # ========================================================================
+    # Remove-CMASCollectionVariable
+    # ========================================================================
+    'Remove-CMASCollectionVariable' = @{
+        ByCollectionName = @{
+            CollectionName = "Test-Collection-Direct"  # Replace with test collection name
+            VariableName = "TestCollVar_Remove"  # Will be made unique with timestamp in tests
+        }
+        ByCollectionId = @{
+            CollectionId = "SMS00100"  # Replace with test collection ID
+            VariableName = "TestCollVar_RemoveByID"  # Will be made unique with timestamp in tests
+        }
+        ByWildcard = @{
+            CollectionName = "Test-Collection-Direct"
+            VariableNamePattern = "TestCollVar_RemoveWildcard_*"  # Pattern for batch removal
+        }
+        NonExistentCollection = @{
+            CollectionName = "NONEXISTENT-COLLECTION-999"
+            VariableName = "TestCollVar"
+        }
+        NonExistentVariable = @{
+            CollectionName = "Test-Collection-Direct"
+            VariableName = "NonExistentCollVar999"
+        }
+    }
+
+    # ========================================================================
     # New-CMASDeviceVariable
     # ========================================================================
     'New-CMASDeviceVariable' = @{
