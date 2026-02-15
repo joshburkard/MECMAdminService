@@ -22,3 +22,4 @@ Version | Description | Date | Author
 0.6.2 | added Get-CMASDeviceVariable | 2026-02-14 | Josua Burkard
 0.6.2 | added Remove-CMASDeviceVariable | 2026-02-14 | Josua Burkard
 0.6.3 | added Set-CMASDeviceVariable | 2026-02-14 | Josua Burkard
+0.6.4 | added Get-CMASCollectionVariable | 2026-02-15 | Josua Burkard

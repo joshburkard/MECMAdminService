@@ -13,6 +13,7 @@ This documentation provides details on the functions available in the MECM Admin
 | [Get-CMASCollectionExcludeMembershipRule](./Get-CMASCollectionExcludeMembershipRule.md) | Retrieves exclude membership rules from a Configuration Manager collection. |
 | [Get-CMASCollectionIncludeMembershipRule](./Get-CMASCollectionIncludeMembershipRule.md) | Retrieves include membership rules from a Configuration Manager collection. |
 | [Get-CMASCollectionQueryMembershipRule](./Get-CMASCollectionQueryMembershipRule.md) | Retrieves query membership rules from a Configuration Manager collection. |
+| [Get-CMASCollectionVariable](./Get-CMASCollectionVariable.md) | Gets collection variables for a Configuration Manager collection via the Admin Service. |
 | [Get-CMASDevice](./Get-CMASDevice.md) | Retrieves information about devices from the SCCM Admin Service. |
 | [Get-CMASDeviceVariable](./Get-CMASDeviceVariable.md) | Gets device variables for a Configuration Manager device via the Admin Service. |
 | [Get-CMASScript](./Get-CMASScript.md) | List CMScripts from AdminService |
