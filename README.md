@@ -215,6 +215,7 @@ Get-Help Invoke-CMASScript -Detailed
 
 ### Collection Management
 - `Get-CMASCollection` - Retrieve Configuration Manager collections
+- `Get-CMASCollectionMember` - Retrieve members of Configuration Manager collections
 - `Get-CMASCollectionVariable` - Get collection variables for Configuration Manager collections
 - `New-CMASCollection` - Create new Configuration Manager collections
 - `New-CMASCollectionVariable` - Create new collection variables for Configuration Manager collections

@@ -9,6 +9,7 @@ This documentation provides details on the functions available in the MECM Admin
 | [Add-CMASCollectionMembershipRule](./Add-CMASCollectionMembershipRule.md) | Adds a membership rule to a Configuration Manager collection. |
 | [Connect-CMAS](./Connect-CMAS.md) | Connects to the SCCM Admin Service on a specified site server. |
 | [Get-CMASCollection](./Get-CMASCollection.md) | Retrieves collections from the SCCM Admin Service. |
+| [Get-CMASCollectionMember](./Get-CMASCollectionMember.md) | Retrieves members of a Configuration Manager collection via the Admin Service. |
 | [Get-CMASCollectionDirectMembershipRule](./Get-CMASCollectionDirectMembershipRule.md) | Retrieves direct membership rules from a Configuration Manager collection. |
 | [Get-CMASCollectionExcludeMembershipRule](./Get-CMASCollectionExcludeMembershipRule.md) | Retrieves exclude membership rules from a Configuration Manager collection. |
 | [Get-CMASCollectionIncludeMembershipRule](./Get-CMASCollectionIncludeMembershipRule.md) | Retrieves include membership rules from a Configuration Manager collection. |

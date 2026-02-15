@@ -26,3 +26,6 @@ Version | Description | Date | Author
 0.6.5 | added New-CMASCollectionVariable | 2026-02-15 | Josua Burkard
 0.6.6 | add Remove-CMASCollectionVariable | 2026-02-15 | Josua Burkard
 0.6.7 | added Set-MCASCollectionVariable | 2026-02-15 | Josua Burkard
+0.6.8 | added Get-CMCollectionMember | 2026-02-15 | Josua Burkard
+0.6.8 | added Get-CMCollectionMember | 2026-02-15 | Josua Burkard
+0.6.8 | added Get-CMCollectionMember | 2026-02-15 | Josua Burkard

@@ -222,6 +222,35 @@ $script:TestData = @{
     }
 
     # ========================================================================
+    # Get-CMASCollectionMember
+    # ========================================================================
+    'Get-CMASCollectionMember' = @{
+        ByCollectionName = @{
+            CollectionName = "Test-Collection-Query"
+            ExpectedMinCount = 1
+        }
+        ByCollectionId = @{
+            CollectionId = "SMS00102"  # Replace with actual collection ID
+            ExpectedMinCount = 1
+        }
+        ByCollectionNameAndResourceName = @{
+            CollectionName = "Test-Collection-Query"
+            ResourceName = "TEST-*"
+        }
+        ByCollectionIdAndResourceId = @{
+            CollectionId = "SMS00102"  # Replace with actual collection ID
+            ResourceId = 16777220  # Replace with a ResourceID that is a member
+        }
+        NonExistent = @{
+            CollectionName = "NonExistent Collection 999"
+            CollectionId = "XXX99999"
+            ResourceName = "NONEXISTENT-DEVICE-999"
+            ResourceId = 99999999
+            ExpectedCount = 0
+        }
+    }
+
+    # ========================================================================
     # Add-CMASCollectionMembershipRule
     # ========================================================================
     'Add-CMASCollectionMembershipRule' = @{
