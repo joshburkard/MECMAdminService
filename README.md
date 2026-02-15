@@ -217,6 +217,7 @@ Get-Help Invoke-CMASScript -Detailed
 - `Get-CMASCollection` - Retrieve Configuration Manager collections
 - `Get-CMASCollectionVariable` - Get collection variables for Configuration Manager collections
 - `New-CMASCollection` - Create new Configuration Manager collections
+- `New-CMASCollectionVariable` - Create new collection variables for Configuration Manager collections
 - `Set-CMASCollection` - Modify properties of Configuration Manager collections
 - `Remove-CMASCollection` - Remove Configuration Manager collections
 - `Invoke-CMASCollectionUpdate` - Trigger membership updates for collections

@@ -21,6 +21,7 @@ This documentation provides details on the functions available in the MECM Admin
 | [Invoke-CMASCollectionUpdate](./Invoke-CMASCollectionUpdate.md) | Triggers a membership update for a Configuration Manager collection via the Admin Service. |
 | [Invoke-CMASScript](./Invoke-CMASScript.md) | Executes an approved SCCM script on clients using the Admin Service. |
 | [New-CMASCollection](./New-CMASCollection.md) | Creates a new Configuration Manager collection via the Admin Service. |
+| [New-CMASCollectionVariable](./New-CMASCollectionVariable.md) | Creates a new collection variable for a Configuration Manager collection via the Admin Service. |
 | [New-CMASDeviceVariable](./New-CMASDeviceVariable.md) | Creates a new device variable for a Configuration Manager device via the Admin Service. |
 | [Remove-CMASCollection](./Remove-CMASCollection.md) | Removes a Configuration Manager collection via the Admin Service. |
 | [Remove-CMASCollectionMembershipRule](./Remove-CMASCollectionMembershipRule.md) | Removes a membership rule from a Configuration Manager collection. |

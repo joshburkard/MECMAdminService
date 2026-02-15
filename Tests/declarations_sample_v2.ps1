@@ -162,6 +162,145 @@ $script:TestData = @{
     }
 
     # ========================================================================
+    # Get-CMASCollectionIncludeMembershipRule
+    # ========================================================================
+    'Get-CMASCollectionIncludeMembershipRule' = @{
+        ByCollectionName = @{
+            CollectionName = "Test-Collection-Include"  # Replace with collection that has include rules
+            # May return empty if no include rules exist
+        }
+        ByCollectionId = @{
+            CollectionId = "SMS00101"  # Replace with actual collection ID
+            # May return empty if no include rules exist
+        }
+        ByCollectionNameAndIncludeName = @{
+            CollectionName = "Test-Collection-Include"
+            IncludeCollectionName = "Test-Collection-Direct"  # Replace with actual included collection
+        }
+        ByCollectionIdAndIncludeId = @{
+            CollectionId = "SMS00101"
+            IncludeCollectionId = "SMS00100"  # Replace with actual included collection ID
+        }
+        WithWildcard = @{
+            CollectionName = "Test-Collection-Include"
+            IncludeCollectionName = "TEST-*"
+        }
+        NonExistent = @{
+            CollectionName = "NonExistent Collection 999"
+            CollectionId = "XXX99999"
+        }
+    }
+
+    # ========================================================================
+    # Get-CMASCollectionQueryMembershipRule
+    # ========================================================================
+    'Get-CMASCollectionQueryMembershipRule' = @{
+        ByCollectionName = @{
+            CollectionName = "Test-Collection-Query"  # Replace with collection that has query rules
+            # May return empty if no query rules exist
+        }
+        ByCollectionId = @{
+            CollectionId = "SMS00102"  # Replace with actual collection ID
+            # May return empty if no query rules exist
+        }
+        ByCollectionNameAndRuleName = @{
+            CollectionName = "Test-Collection-Query"
+            RuleName = "Test-Servers"  # Replace with actual query rule name
+        }
+        ByCollectionIdAndRuleName = @{
+            CollectionId = "SMS00102"
+            RuleName = "Test-Servers"  # Replace with actual query rule name
+        }
+        WithWildcard = @{
+            CollectionName = "Test-Collection-Query"
+            RuleName = "*Server*"
+        }
+        NonExistent = @{
+            CollectionName = "NonExistent Collection 999"
+            CollectionId = "XXX99999"
+        }
+    }
+
+    # ========================================================================
+    # Add-CMASCollectionMembershipRule
+    # ========================================================================
+    'Add-CMASCollectionMembershipRule' = @{
+        TestCollection = @{
+            CollectionName = "Test-Collection-Rules"  # Replace with test collection name
+            CollectionId = "SMS00104"  # Replace with test collection ID
+        }
+        DirectByCollectionNameAndResourceId = @{
+            CollectionName = "Test-Collection-Rules"
+            ResourceId = 16777220  # Replace with actual ResourceID to add
+            ResourceIdArray = @(16777220, 16777221)  # Optional: Array for multi-add tests
+        }
+        DirectByCollectionIdAndResourceName = @{
+            CollectionId = "SMS00104"
+            ResourceName = "TEST-DEVICE-001"  # Replace with actual device name
+        }
+        QueryByCollectionName = @{
+            CollectionName = "Test-Collection-Rules"
+            RuleName = "Test-Query-Rule"  # Replace with unique rule name
+            QueryExpression = "select SMS_R_SYSTEM.ResourceID from SMS_R_System where SMS_R_System.Name like 'TEST-%'"
+        }
+        IncludeByCollectionName = @{
+            CollectionName = "Test-Collection-Rules"
+            CollectionId = "SMS00104"  # Optional: for testing by ID
+            IncludeCollectionName = "Test-Collection-Query"  # Replace with collection to include
+            IncludeCollectionId = "SMS00102"  # Optional: for testing by ID
+        }
+        ExcludeByCollectionName = @{
+            CollectionName = "Test-Collection-Rules"
+            CollectionId = "SMS00104"  # Optional: for testing by ID
+            ExcludeCollectionName = "Test-Collection-Direct"  # Replace with collection to exclude
+            ExcludeCollectionId = "SMS00100"  # Optional: for testing by ID
+        }
+    }
+
+    # ========================================================================
+    # Remove-CMASCollectionMembershipRule
+    # ========================================================================
+    'Remove-CMASCollectionMembershipRule' = @{
+        TestCollection = @{
+            CollectionName = "Test-Collection-Rules"  # Replace with test collection name
+            CollectionId = "SMS00104"  # Replace with test collection ID
+        }
+        DirectByCollectionNameAndResourceId = @{
+            CollectionName = "Test-Collection-Rules"
+            ResourceId = 16777220  # Replace with actual ResourceID to remove
+            ResourceIdArray = @(16777220, 16777221)  # Optional: Array for multi-remove tests
+        }
+        DirectByCollectionIdAndResourceName = @{
+            CollectionId = "SMS00104"
+            ResourceName = "TEST-DEVICE-001"  # Replace with actual device name
+        }
+        DirectByWildcard = @{
+            CollectionName = "Test-Collection-Rules"
+            ResourceName = "TEST-*"  # Wildcard pattern for batch removal
+        }
+        QueryByCollectionName = @{
+            CollectionName = "Test-Collection-Rules"
+            RuleName = "Test-Query-Rule"  # Replace with query rule name
+        }
+        QueryByWildcard = @{
+            CollectionName = "Test-Collection-Rules"
+            RuleName = "*Query*"  # Wildcard pattern for batch removal
+        }
+        IncludeByCollectionName = @{
+            CollectionName = "Test-Collection-Rules"
+            CollectionId = "SMS00104"  # Optional: for testing by ID
+            IncludeCollectionName = "Test-Collection-Query"  # Replace with collection to remove
+            IncludeCollectionId = "SMS00102"  # Optional: for testing by ID
+        }
+        ExcludeByCollectionName = @{
+            CollectionName = "Test-Collection-Rules"
+            CollectionId = "SMS00104"  # Optional: for testing by ID
+            ExcludeCollectionName = "Test-Collection-Direct"  # Replace with collection to remove
+            ExcludeCollectionId = "SMS00100"  # Optional: for testing by ID
+        }
+    }
+
+    # ========================================================================
     # Get-CMASScript
     # ========================================================================
     'Get-CMASScript' = @{
@@ -262,6 +401,353 @@ $script:TestData = @{
             RefreshType = "Both"
         }
     }
+
+    # ========================================================================
+    # Remove-CMASCollection
+    # ========================================================================
+    'Remove-CMASCollection' = @{
+        ByName = @{
+            # Note: Test collections will be created dynamically during tests
+            # This ensures we don't accidentally delete real collections
+            CollectionNamePattern = "Test-Remove-Collection-*"
+        }
+        ById = @{
+            # Note: Test collections will be created dynamically during tests
+            # CollectionId will be determined at test runtime
+        }
+        WithMembers = @{
+            # Note: Test collection with members will be created dynamically
+            # to test warning messages about member count
+            CreateWithMembers = $true
+        }
+        Protected = @{
+            # These collections should never be deletable
+            ProtectedCollections = @("SMS00001", "SMS00002", "SMS00003", "SMS00004")
+        }
+    }
+
+    # ========================================================================
+    # Set-CMASCollection
+    # ========================================================================
+    'Set-CMASCollection' = @{
+        UpdateName = @{
+            # Note: Test collection will be created dynamically during tests
+            OriginalName = "Test-Set-Collection-Original"
+            NewName = "Test-Set-Collection-Updated"
+        }
+        UpdateComment = @{
+            # Note: Test collection will be created dynamically during tests
+            CollectionName = "Test-Set-Collection-Comment"
+            Comment = "Updated comment via automated tests"
+        }
+        UpdateRefreshType = @{
+            # Note: Test collection will be created dynamically during tests
+            CollectionName = "Test-Set-Collection-RefreshType"
+            OriginalRefreshType = "Manual"
+            NewRefreshType = "Continuous"
+        }
+        UpdateRefreshSchedule = @{
+            # Note: Test collection will be created dynamically during tests
+            CollectionName = "Test-Set-Collection-Schedule"
+            RefreshType = "Periodic"
+            RefreshSchedule = @{
+                DaySpan = 1
+                StartTime = "2025-02-14T00:00:00Z"
+            }
+        }
+        UpdateMultipleProperties = @{
+            # Note: Test collection will be created dynamically during tests
+            CollectionName = "Test-Set-Collection-Multiple"
+            NewName = "Test-Set-Collection-Multiple-Updated"
+            Comment = "Multiple properties updated"
+            RefreshType = "Both"
+        }
+        ByCollectionId = @{
+            # Note: Test collection will be created dynamically during tests
+            # CollectionId will be determined at test runtime
+        }
+        ByInputObject = @{
+            # Note: Test collection will be created dynamically during tests
+            # Collection object will be retrieved at test runtime
+        }
+    }
+
+    # ========================================================================
+    # Set-CMASCollectionSchedule
+    # ========================================================================
+    'Set-CMASCollectionSchedule' = @{
+        DailySchedule = @{
+            CollectionName = "Test-Schedule-Daily"
+            RecurInterval = "Days"
+            RecurCount = 1
+        }
+        HourlySchedule = @{
+            CollectionName = "Test-Schedule-Hourly"
+            RecurInterval = "Hours"
+            RecurCount = 4
+        }
+        MinuteSchedule = @{
+            CollectionName = "Test-Schedule-Minute"
+            RecurInterval = "Minutes"
+            RecurCount = 30
+        }
+    }
+
+    # ========================================================================
+    # Invoke-CMASCollectionUpdate
+    # ========================================================================
+    'Invoke-CMASCollectionUpdate' = @{
+        ByCollectionName = @{
+            CollectionName = "All Systems"
+            ExpectedSuccess = $true
+        }
+        ByCollectionId = @{
+            CollectionId = "SMS00001"  # All Systems
+            ExpectedSuccess = $true
+        }
+        NonExistent = @{
+            CollectionName = "NonExistent-Collection-XYZ999"
+            CollectionId = "XXX99999"
+            ExpectedSuccess = $false
+        }
+    }
+
+    # ========================================================================
+    # Get-CMASCollectionVariable
+    # ========================================================================
+    'Get-CMASCollectionVariable' = @{
+        ByCollectionName = @{
+            CollectionName = "Test-Collection-WithVariables"  # Collection with variables
+            ExpectedMinCount = 1  # Should have at least 1 variable
+        }
+        ByCollectionId = @{
+            CollectionId = "SMS00100"  # Replace with CollectionID of collection with variables
+            ExpectedMinCount = 1
+        }
+        ByCollectionNameAndVariableName = @{
+            CollectionName = "Test-Collection-WithVariables"
+            VariableName = "TestVar"  # Replace with existing variable
+        }
+        ByCollectionIdAndVariableName = @{
+            CollectionId = "SMS00100"
+            VariableName = "TestMaskedVar"  # Replace with existing masked variable
+        }
+        ByWildcard = @{
+            CollectionName = "Test-Collection-WithVariables"
+            VariableName = "Test*"  # Wildcard pattern to match test variables
+        }
+        NonExistentCollection = @{
+            CollectionName = "NONEXISTENT-COLLECTION-999"
+            ExpectedCount = 0
+        }
+        NonExistentVariable = @{
+            CollectionName = "Test-Collection-WithVariables"
+            VariableName = "NonExistentVar999"
+            ExpectedCount = 0
+        }
+        CollectionWithoutVariables = @{
+            # If you have a collection without variables, specify it here
+            # Otherwise this test will be skipped
+            CollectionName = "All Systems"  # All Systems typically has no variables
+            CollectionId = "SMS00001"
+        }
+    }
+
+    # ========================================================================
+    # New-CMASCollectionVariable
+    # ========================================================================
+    'New-CMASCollectionVariable' = @{
+        ByCollectionName = @{
+            CollectionName = "Test-Collection-WithVariables"  # Existing test collection
+            VariableName = "TestCollVar"  # Will be made unique with timestamp in tests
+            VariableValue = "TestCollValue123"
+        }
+        ByCollectionId = @{
+            CollectionId = "SMS00100"  # Replace with test collection ID
+            VariableName = "TestCollVar_CollID"  # Will be made unique with timestamp in tests
+            VariableValue = "TestValueByCollID"
+        }
+        WithSpecialChars = @{
+            CollectionName = "Test-Collection-WithVariables"
+            VariableName = "TestCollVar_Special"  # Will be made unique with timestamp in tests
+            VariableValue = "C:\\Windows\\System32;D:\\Apps"
+        }
+        MaskedVariable = @{
+            CollectionName = "Test-Collection-WithVariables"
+            VariableName = "TestCollVar_Masked"  # Will be made unique with timestamp in tests
+            VariableValue = "SecretCollValue123"
+            IsMasked = $true
+        }
+        EmptyValue = @{
+            CollectionName = "Test-Collection-WithVariables"
+            VariableName = "TestCollVar_Empty"  # Will be made unique with timestamp in tests
+            VariableValue = ""
+        }
+        NonExistentCollection = @{
+            CollectionName = "NONEXISTENT-COLLECTION-999"
+            VariableName = "TestCollVar_NoCollection"
+            VariableValue = "ShouldFail"
+        }
+        InvalidVariableName = @{
+            CollectionName = "Test-Collection-WithVariables"
+            VariableName = "Test Coll Var Invalid"  # Spaces not allowed - should fail validation
+            VariableValue = "ShouldFail"
+        }
+    }
+
+    # ========================================================================
+    # New-CMASDeviceVariable
+    # ========================================================================
+    'New-CMASDeviceVariable' = @{
+        ByDeviceName = @{
+            DeviceName = "TEST-DEVICE-001"  # Existing test device
+            VariableName = "TestVar"  # Will be made unique with timestamp in tests
+            VariableValue = "TestValue123"
+        }
+        ByResourceId = @{
+            ResourceId = 16777220  # Replace with actual ResourceID
+            VariableName = "TestVar_ResID"  # Will be made unique with timestamp in tests
+            VariableValue = "TestValueByResID"
+        }
+        WithSpecialChars = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableName = "TestVar_Special"  # Will be made unique with timestamp in tests
+            VariableValue = "C:\\Windows\\System32;D:\\Apps"
+        }
+        MaskedVariable = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableName = "TestVar_Masked"  # Will be made unique with timestamp in tests
+            VariableValue = "SecretValue123"
+            IsMasked = $true
+        }
+        EmptyValue = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableName = "TestVar_Empty"  # Will be made unique with timestamp in tests
+            VariableValue = ""
+        }
+        NonExistentDevice = @{
+            DeviceName = "NONEXISTENT-DEVICE-999"
+            VariableName = "TestVar_NoDevice"
+            VariableValue = "ShouldFail"
+        }
+        InvalidVariableName = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableName = "Test Var Invalid"  # Spaces not allowed - should fail validation
+            VariableValue = "ShouldFail"
+        }
+    }
+
+    # ========================================================================
+    # Get-CMASDeviceVariable
+    # ========================================================================
+    'Get-CMASDeviceVariable' = @{
+        ByDeviceName = @{
+            DeviceName = "TEST-DEVICE-001"  # Device with variables
+            ExpectedMinCount = 1  # Should have at least 1 variable from tests
+        }
+        ByResourceId = @{
+            ResourceId = 16777220  # Replace with actual ResourceID
+            ExpectedMinCount = 1
+        }
+        ByDeviceNameAndVariableName = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableName = "TestVar*"  # Wildcard pattern to match test variables
+        }
+        ByResourceIdAndVariableName = @{
+            ResourceId = 16777220
+            VariableName = "TestVar_ResID*"  # Specific test variable pattern
+        }
+        NonExistentDevice = @{
+            DeviceName = "NONEXISTENT-DEVICE-999"
+            ExpectedCount = 0
+        }
+        NonExistentVariable = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableName = "NonExistentVar999"
+            ExpectedCount = 0
+        }
+        DeviceWithoutVariables = @{
+            # If you have a device without variables, specify it here
+            # Otherwise this test will be skipped
+            DeviceName = $null  # Set to actual device name or leave null
+            ResourceId = $null  # Set to actual ResourceID or leave null
+        }
+    }
+
+    # ========================================================================
+    # Remove-CMASDeviceVariable
+    # ========================================================================
+    'Remove-CMASDeviceVariable' = @{
+        ByDeviceName = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableName = "TestVar_Remove"  # Will be made unique with timestamp in tests
+        }
+        ByResourceId = @{
+            ResourceId = 16777220  # Replace with actual ResourceID
+            VariableName = "TestVar_RemoveByID"  # Will be made unique with timestamp in tests
+        }
+        ByWildcard = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableNamePattern = "TestVar_RemoveWildcard_*"  # Pattern for batch removal
+        }
+        NonExistentDevice = @{
+            DeviceName = "NONEXISTENT-DEVICE-999"
+            VariableName = "TestVar"
+        }
+        NonExistentVariable = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableName = "NonExistentVar999"
+        }
+    }
+
+    # ========================================================================
+    # Set-CMASDeviceVariable
+    # ========================================================================
+    'Set-CMASDeviceVariable' = @{
+        ByDeviceName = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableName = "TestVar_Set"  # Will be made unique with timestamp in tests
+            OriginalValue = "OriginalValue"
+            NewValue = "ModifiedValue123"
+        }
+        ByResourceId = @{
+            ResourceId = 16777220  # Replace with actual ResourceID
+            VariableName = "TestVar_SetByResID"  # Will be made unique with timestamp in tests
+            OriginalValue = "OriginalValueByID"
+            NewValue = "ModifiedValueByID"
+        }
+        ChangeMaskedState = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableName = "TestVar_Mask"  # Will be made unique with timestamp in tests
+            OriginalValue = "ValueToMask"
+            NewValue = "ValueToMask"  # Keep value same, just change masked state
+            IsMasked = $true
+        }
+        UnmaskVariable = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableName = "TestVar_Unmask"  # Will be made unique with timestamp in tests
+            OriginalValue = "MaskedValue"
+            NewValue = "UnmaskedValue"
+            IsNotMasked = $true
+        }
+        EmptyValue = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableName = "TestVar_SetEmpty"  # Will be made unique with timestamp in tests
+            OriginalValue = "SomeValue"
+            NewValue = ""
+        }
+        NonExistentDevice = @{
+            DeviceName = "NONEXISTENT-DEVICE-999"
+            VariableName = "TestVar"
+            NewValue = "ShouldFail"
+        }
+        NonExistentVariable = @{
+            DeviceName = "TEST-DEVICE-001"
+            VariableName = "NonExistentVar999"
+            NewValue = "ShouldFail"
+        }
+    }
+
 }
 #endregion
 
